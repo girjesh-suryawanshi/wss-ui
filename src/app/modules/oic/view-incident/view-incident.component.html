@@ -1,1 +1,53 @@
-<p>view-incident works!</p>
+<div class="card border-dark">
+    <div class="card-header text-center text-white">VIEW INCIDENT</div>
+    <div class="card-body">
+      <div *ngIf="!(incidentMasterList && incidentMasterList.length>0)" class="alert alert-warning text-center mt-2 ml-2 mr-2" role="alert">
+        <b> No issue not found !!!</b>     
+      </div>
+      <div *ngIf="(incidentMasterList && incidentMasterList.length>0)" class="row mb-4">
+         <div class="col-md-12">
+          <div class="card border-0 rounded-0">
+            <div class="card-body">
+              <div class="table-responsive-md mt-2">
+  
+                <!-- <nav class="navbar">
+                    <input type="text" class="form-control" name="tokenNumber" [(ngModel)]="tokenNumber" (ngModelChange)="search()" placeholder="Enter token number to search">
+                </nav> -->
+                <table class="table table-responsive-md text-center" datatable [dtOptions]="dtOptions" *ngIf="!isView">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Incident No</th>
+                      <th scope="col">Incident</th>
+                      <th scope="col">Incident Object</th>
+                      <th scope="col">Incident Object type</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Assign To</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                      <th scope="col">Action</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor=" let i = index let incidentMaster of incidentMasterList">
+                      <td><small>{{i+1}}</small></td>
+                      <td><small><b>{{incidentMaster.incidentNumber}}</b></small></td>
+                      <td><small>{{incidentMaster.incident}}</small></td>
+                      <td><small>{{incidentMaster.incidentObject}}</small></td>
+                      <td><small>{{incidentMaster.incidentObjectType}}</small></td>
+                      <td><small>{{incidentMaster.createdOn | date:'dd/MM/yyyy'}}</small></td>
+                      <td><small>{{incidentMaster.assignedUsername}}&nbsp;({{incidentMaster.assignedName}})</small></td>
+                      <td><small>{{incidentMaster.status}}</small></td>
+                      <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(incidentMaster)">View</button></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

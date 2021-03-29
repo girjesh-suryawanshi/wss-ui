@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
+import { IncidentMaster } from 'src/app/models/incidentMaster.model';
+import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
+import { User } from 'src/app/models/user.model';
+import { IncidentMasterService } from 'src/app/services/project/incident-master.service'
 
 @Component({
   selector: 'app-add-incident',
@@ -22,11 +26,22 @@ export class AddIncidentComponent implements OnInit {
 
   isDepartment: boolean;
 
+  incidentMasterModal :IncidentMaster
+
   myFiles: any[];
+  isProcessing: boolean;
+  loggedInUser: User;
+  role: string;
+  username: string;
+  name: string;
+  locationCode: string;
+  locationName: string;
+  officeType: string;
+  incidentNumber: any;
 
 
 
-  constructor(private globalutilityService: GobalutilityService) { }
+  constructor(private authorizationService: AuthorizationService,private globalutilityService: GobalutilityService,private incidentMasterService:IncidentMasterService) { }
 
   incidentMasterForm: FormGroup;
 
@@ -35,11 +50,19 @@ export class AddIncidentComponent implements OnInit {
     this.incidentMasterForm = new FormGroup({
       incident: new FormControl('', Validators.required),
       incidentObject: new FormControl('', Validators.required),
-      incidentobjecType: new FormControl('', Validators.required),
+      incidentObjectType: new FormControl('', Validators.required),
       employeeType: new FormControl('', Validators.required),
       incidentDescription : new FormControl('', Validators.required),
       isAttachment:new FormControl(false)
     });
+
+    this.loggedInUser = this.authorizationService.getLoggedInUser();
+    this.role = this.loggedInUser.getRole();
+    this.username = this.loggedInUser.getUsername();
+    this.name = this.loggedInUser.getName();
+    this.locationCode = this.loggedInUser.getLocationCode();
+    this.locationName = this.loggedInUser.getLocationShortName();
+    this.officeType = this.loggedInUser.getOfficeType();
   }
 
   onChangeIncidentObject() {
@@ -57,6 +80,7 @@ export class AddIncidentComponent implements OnInit {
 
   }
 
+
   onChangeIncidentObjectType() {
 
     this.resetEmployeeType();
@@ -64,7 +88,7 @@ export class AddIncidentComponent implements OnInit {
     console.log("incident object type called");
 
     console.log(this.incidentMasterForm.value.incidentobjecType);
-    if (this.incidentMasterForm.value.incidentobjecType == 'Department') {
+    if (this.incidentMasterForm.value.incidentObjectType == 'Department') {
       this.isDepartment = true;
       
     } else {
@@ -147,7 +171,58 @@ export class AddIncidentComponent implements OnInit {
 
 
   onSubmitIncidentMasterForm() {
+    
+      this.isProcessing = true;
+  
+      this.preparedIssueMasterObject();
+  
+      console.log("Object  prepared received");
+      console.log(this.incidentMasterModal);
+      this.incidentMasterService.insertIncidentMaster(this.incidentMasterModal, this.myFiles).subscribe(success => {
+        if (success.status === 201) {
+          this.isProcessing = false;
+          this.resetIncidentMasterForm();
+          this.incidentNumber = success.body;
+          this.globalutilityService.successAlertMessage("Incident Registered Successfully With Id:" + this.incidentNumber.incidentNumber);
+        }
+      }, error => {
+        if(error.status ===417){
+          this.isProcessing = false;
+          this.globalutilityService.errorAlertMessage("Unable to registered incident");
+          this.resetIncidentMasterForm();
+        }
+       })
+    }
+  
+    private preparedIssueMasterObject() {
+      this.incidentMasterModal = new IncidentMaster();
+      this.incidentMasterModal.setUsername(this.username);
+      this.incidentMasterModal.setName(this.name);
+      this.incidentMasterModal.setLocationCode(this.locationCode);
+      this.incidentMasterModal.setLocationName(this.locationName);
+      this.incidentMasterModal.setOfficeType(this.officeType);
+      this.incidentMasterModal.setIncident(this.incidentMasterForm.value.incident);
+      this.incidentMasterModal.setIncidentObject(this.incidentMasterForm.value.incidentObject);
+      this.incidentMasterModal.setIncidentObjectType(this.incidentMasterForm.value.incidentObjectType);
+      this.incidentMasterModal.setEmpployeeType(this.incidentMasterForm.value.employeeType);
+      this.incidentMasterModal.setIncidentDescription(this.incidentMasterForm.value.incidentDescription);
+      
+  
+    }
 
-  }
+    resetIncidentMasterForm() {
+      this.myFiles = [];
+      this.incidentMasterForm.patchValue({
+        incident: '',
+        incidentObject: '',
+        incidentObjectType: '',
+        employeeType: '',
+        incidentDescription: '',
+        attachment: '',
+        isAttachment: ''
+      });
+  
+    }
+  
 
 }

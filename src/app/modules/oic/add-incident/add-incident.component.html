@@ -27,12 +27,12 @@
 
                 <div class="col-md-3 mb-4 mt-4" *ngIf="isHuman">
                     <div>
-                        <select class="form-control" name="incidentObjectType" formControlName="incidentobjecType"
+                        <select class="form-control" name="incidentObjectType" formControlName="incidentObjectType"
                             (change)="onChangeIncidentObjectType()" required>
                             <option value="" disabled>Select Incident Object Type</option>
-                            <option *ngFor="let incidentobjecType of incidentObjectTypeList"
-                                [ngValue]="incidentobjecType" class="form-control form-control-sm">
-                                {{incidentobjecType}}</option>
+                            <option *ngFor="let incidentObjectType of incidentObjectTypeList"
+                                [ngValue]="incidentObjectType" class="form-control form-control-sm">
+                                {{incidentObjectType}}</option>
                         </select>
                     </div>
                 </div>

@@ -34,7 +34,7 @@ const routes: Routes = [
 
           {
             path:'view-incident',
-            component:AddIssueComponent
+            component:ViewIncidentComponent
 
           },
 
