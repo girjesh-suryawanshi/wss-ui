@@ -26,6 +26,7 @@ export class ViewIncidentComponent implements OnInit {
   isAttatchMore: boolean;
   attachmentMoreForm: FormGroup;
   uploadFiles: any[];
+  isProcessing: boolean;
 
   constructor(private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService, private incidentMasterService: IncidentMasterService,
     private fileServices:FileServiceService,private incidentStatusService:IncidentStatusService) { }
@@ -168,6 +169,29 @@ export class ViewIncidentComponent implements OnInit {
       console.log(error);
     })
 
+  }
+
+
+  onAttatchMoreSubmit() {
+    this.isProcessing = true;
+    this.fileServices.attachMoreFileByIncidentNumber(this.viewIncident.incidentNumber, this.attachmentMoreForm.value.comments,this.uploadFiles).subscribe(success => {
+      if (success.status === 201) {
+        this.globalutilityService.successAlertMessage("File Upload successfully");
+        this.isProcessing = false;
+        // this.resetResolveForm();
+        // this.onClickResolveBack();
+        // this.isView = false;
+      }
+      // this.getAllAssignedProblemStatement(this.username);
+    }, error => {
+      if (error.status === 417) {
+        this.isProcessing = false;
+        // this.resetResolveForm();
+        // this.onClickResolveBack();
+        this.isView = false;
+        this.globalutilityService.errorAlertMessage("Unable to Upload file!!");
+      }
+    })
   }
 
   public onClickBack() {

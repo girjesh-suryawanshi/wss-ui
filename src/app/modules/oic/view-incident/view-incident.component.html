@@ -266,4 +266,11 @@
     </form>
   </div>
 </div>
+
+<div *ngIf="isProcessing">
+  <div class="form-group d-flex justify-content-center mt-3">
+    <label class="font-weight-bold">Processing....</label>
+    <div class="spinner-border text-info"></div>
+  </div>
+</div>
   

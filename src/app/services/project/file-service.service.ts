@@ -41,4 +41,19 @@ export class FileServiceService {
   }
   
 
+  attachMoreFileByIncidentNumber(incidentNumber:string,comments:string,uploadFiles: File [] ) {
+    let formData = new FormData();
+        uploadFiles.forEach(file  => {
+        formData.append('files', file);
+    });
+    formData.append('incidentNumber',incidentNumber);
+    formData.append('comments',comments);
+    // formData.append('requestInformation', JSON.stringify(requestInformation));
+
+    return this.http.post(this.contextPath + 'incident-master/attach-file/', formData, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
 }
