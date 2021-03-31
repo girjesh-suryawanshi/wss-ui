@@ -21,3 +21,6 @@
     background-color: #a95c17;
     border-color: #301a02;
   }
+  hr.view{
+    border-top: 5px solid  #a95c17;
+}

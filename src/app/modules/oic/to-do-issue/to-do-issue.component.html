@@ -155,7 +155,7 @@
 
 <div class="card" *ngIf="isView">
    <div class="card-header">
-    <div id="titleDiv"><h3 class="card-title text-white text-xs-center">ISSUE CURRENT STATUS</h3></div>
+    <div id="titleDiv"><h3 class="card-title text-white text-xs-center">INCIDENT CURRENT STATUS</h3></div>
 
     <div class="card-tools">
       <button
@@ -168,26 +168,24 @@
   </div>
   <!-- /.card-header -->
   <div class="card-body">
-    <div *ngIf="statusList && statusList.length>0">
+    <div *ngIf="incidentStatusList && incidentStatusList.length>0">
       <!-- <hr> -->
       <table class="table table-responsive-md">
             
         <tbody>
           <tr>
             <th>#</th>
-            <th>Token Number</th>
+            <th>Incident Number</th>
             <th>Status</th>
             
             <th>Comments</th>
             <th>Assigned User</th>
             <th>Date/Time</th>
-            <th>Attachment</th>
-
           </tr>
-          <tr *ngFor="let status of statusList let i = index">
+          <tr *ngFor="let status of incidentStatusList let i = index">
             <td><small>{{i+1}}</small></td>
-            <td><small><b>{{status.tokenNumber}}</b></small></td>
-            <td><span *ngIf="status.status==='COMPLETED'"
+            <td><small><b>{{status.incidentNumber}}</b></small></td>
+            <td><span *ngIf="status.status==='SUBMITTED'"
               class="badge badge-success rounded-0 p-1">{{status.status}}</span>
             <span *ngIf="status.status==='REJECTED'"
               class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
@@ -197,8 +195,7 @@
               class="badge badge-primary rounded-0 p-1">{{status.status}}</span></td>
               <td><small>{{status.userComments}}</small></td>
             <td><small>{{status.username}}({{status.name}})</small></td>
-            <td><small>{{status.createdOn | date:'medium'}}</small></td>
-            <td ><button class="btn btn-info btn-sm" *ngIf="status.status==='COMPLETED' && resolveIssuefiles"  data-toggle="modal" data-target="#resolveIssueFileModal" (click)="viewResolveIssueFileClicked(status)"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button><button class="btn btn-danger btn-sm" *ngIf="status.status==='PENDING'&& reopenIssuefiles" (click)="viewReopenFileClicked(status)" data-toggle="modal" data-target="#reopenIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
+            <td><small>{{status.createdOn | date:'medium'}}</small></td>            
           </tr>
         </tbody>
       </table>

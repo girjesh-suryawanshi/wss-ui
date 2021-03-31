@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { GlobalConfiguration } from 'src/app/config/global.config';
@@ -21,5 +21,24 @@ export class FileServiceService {
         return response;
       }));
   }
+
+
+  viewFile(incidentNumber: string, fileName: string, response) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append("incidentNumber", incidentNumber)
+    .append("fileName", fileName)
+   
+    let options : any = {
+      responseType: 'blob',
+      params: httpParams
+    }
+  
+    if (response) {
+      options["observe"] = 'response';
+    }
+  
+    return this.http.get(this.contextPath +"/upload-file/downloadFile", options);
+  }
+  
 
 }

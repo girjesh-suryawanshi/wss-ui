@@ -20,12 +20,12 @@
                       <th scope="col">Incident No</th>
                       <th scope="col">Incident</th>
                       <th scope="col">Incident Object</th>
-                      <th scope="col">Incident Object type</th>
+                      <!-- <th scope="col">Incident Object type</th> -->
                       <th scope="col">Date</th>
                       <th scope="col">Assign To</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Action</th>
-                      <th scope="col">Action</th>
+                      <th scope="">Action</th>
+                      <!-- <th scope="col"></th> -->
                      </tr>
                   </thead>
                   <tbody>
@@ -34,12 +34,12 @@
                       <td><small><b>{{incidentMaster.incidentNumber}}</b></small></td>
                       <td><small>{{incidentMaster.incident}}</small></td>
                       <td><small>{{incidentMaster.incidentObject}}</small></td>
-                      <td><small>{{incidentMaster.incidentObjectType}}</small></td>
+                      <!-- <td><small>{{incidentMaster.incidentObjectType}}</small></td> -->
                       <td><small>{{incidentMaster.createdOn | date:'dd/MM/yyyy'}}</small></td>
                       <td><small>{{incidentMaster.assignedUsername}}&nbsp;({{incidentMaster.assignedName}})</small></td>
                       <td><small>{{incidentMaster.status}}</small></td>
                       <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(incidentMaster)">View</button></td>
-                      <td></td>
+                      <!-- <td></td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -206,10 +206,7 @@
              <td><small>{{status.userComments}}</small></td>
              <td><small>{{status.username}}({{status.name}})</small></td>
              <td><small>{{status.createdOn | date:'medium'}}</small></td>
-             <td><button class="btn btn-success btn-sm" *ngIf="status.status==='COMPLETED'&& resolveIssuefiles" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button><button class="btn btn-danger btn-sm" *ngIf="status.status==='PENDING'&& reopenIssuefiles" (click)="viewReopenFileClicked(status)" data-toggle="modal" data-target="#reopenIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td>
-             <!-- <td><button class="btn btn-info btn-sm"  (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td> -->
-             <!-- <td><button class="btn btn-info btn-sm" *ngIf="status.status==='PENDING'&& resolveIssuefiles" (click)="viewResolveIssueFileClicked(status)" data-toggle="modal" data-target="#resolveIssueFileModal"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button></td> -->
-                    </tr>
+           </tr>
          </tbody>
        </table>
      </div> 
@@ -217,4 +214,56 @@
    </div>
    <!-- /.card-body -->
   </div>
+
+<hr *ngIf="isView"  class="view">
+<div *ngIf="isView" class="d-flex justify-content-center mr-2">
+  <div>
+    <button class="btn btn-info btn-sm mr-4"(click)="onClickAttachmentMore(viewIssue)">Attach More Document</button>
+  </div>
+</div>
+
+<div class="card mt-2" *ngIf="isAttatchMore">
+  <div class="card-header text-center text-white">ATTACH MORE FILES</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm"(click)="onClickAttatchmentBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+    <form [formGroup]="attachmentMoreForm" (ngSubmit)="onAttatchMoreSubmit()">
+      <table class="table d-flex justify-content-center">
+        <tbody>
+          <tr>
+            <th>Token Number</th>
+            <td><small>{{viewIncident.incidentNumber}}</small></td>
+          </tr>
+          <tr>
+            <th>comments</th>
+            <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks" required></textarea></td>
+          </tr>
+          <tr>
+            <td>Attachment </td><td><input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1" (click)="isAttachmentClicked()"></td>
+          </tr>
+          <tr *ngIf="attachmentMoreForm.value.isAttachment"><td>No of file</td><td><font color=red>10 file allow</font></td></tr>
+          <tr *ngIf="attachmentMoreForm.value.isAttachment"><td>File size</td><td><font color=red>1Mb Each</font></td></tr>
+          <tr *ngIf="attachmentMoreForm.value.isAttachment"><td>File type</td><td><font color=red>[ jpg, pdf ,doc ,xls ] only</font></td></tr>
+          <tr *ngIf="attachmentMoreForm.value.isAttachment"><td></td><td ><input type="file" class="form-control-file" (change)="onFileChange($event)"formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></td></tr>
+          <tr *ngIf="uploadFiles && uploadFiles.length>0 && attachmentMoreForm.value.isAttachment">
+            <th>#</th>
+            <th>File name</th>
+            <th>Action</th>
+          </tr>             
+          <tr *ngFor="let file of uploadFiles; let i = index">
+            <td *ngIf="attachmentMoreForm.value.isAttachment">{{i+1}}</td>
+            <td *ngIf="attachmentMoreForm.value.isAttachment">{{file.name}}</td>
+            <td *ngIf="attachmentMoreForm.value.isAttachment"> {{file.size/1000000 | number}}Mb</td>
+            <td *ngIf="attachmentMoreForm.value.isAttachment">
+              <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+            </td>
+          </tr>  
+          <tr>
+            <th></th>
+            <td><button type="submit" [disabled]="attachmentMoreForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
   

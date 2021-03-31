@@ -4,6 +4,9 @@ import { IncidentMasterService } from 'src/app/services/project/incident-master.
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 import { FileServiceService } from 'src/app/services/project/file-service.service';
 import { IncidentStatusService } from 'src/app/services/project/incident-status.service';
+import { User } from 'src/app/models/user.model';
+import { GlobalConstants } from 'src/app/utility/global.constants';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-incident',
@@ -11,7 +14,7 @@ import { IncidentStatusService } from 'src/app/services/project/incident-status.
   styleUrls: ['./view-incident.component.css']
 })
 export class ViewIncidentComponent implements OnInit {
-  loggedInUser: import("d:/nodeworkspace/wss-ui/src/app/models/user.model").User;
+  loggedInUser:User;
   username: string;
   locationCode: string;
   incidentMasterList: any;
@@ -20,11 +23,20 @@ export class ViewIncidentComponent implements OnInit {
   viewIncident: any;
   files: any;
   incidentStatusList: any;
+  isAttatchMore: boolean;
+  attachmentMoreForm: FormGroup;
+  uploadFiles: any[];
 
   constructor(private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService, private incidentMasterService: IncidentMasterService,
     private fileServices:FileServiceService,private incidentStatusService:IncidentStatusService) { }
 
   ngOnInit(): void {
+     
+    this.attachmentMoreForm = new FormGroup({
+      comments: new FormControl('', Validators.required),
+      isAttachment :new FormControl(false)
+    });
+
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
@@ -36,6 +48,8 @@ export class ViewIncidentComponent implements OnInit {
       lengthMenu : [10, 25, 50],
       processing: true
     };
+    
+    
   }
   getIncidentByUseranmeAndLocationcode(username: string, locationCode: string) {
     this.incidentMasterService.getIncidentByUsernameAndLocationCode(username, locationCode).subscribe(success => {
@@ -60,13 +74,68 @@ export class ViewIncidentComponent implements OnInit {
   }
 
   public onClickView(incidentMaster: any) {
-
     this.viewIncident = incidentMaster;
     this.isView = true;
     this.getFileByIncidentNumber(incidentMaster.incidentNumber);
-    this.getIncidentStatusByIncidentNumber(incidentMaster.incidentNumber);
-      
+    this.getIncidentStatusByIncidentNumber(incidentMaster.incidentNumber);      
   }
+
+  isAttachmentClicked(){
+    this.attachmentMoreForm.get('isAttachment').valueChanges.subscribe(checked => {
+      if (checked) {
+        const validators = [Validators.required];
+        this.attachmentMoreForm.addControl('attachment', new FormControl('', validators));
+      } else {
+        this.attachmentMoreForm.removeControl('attachment');
+      }
+
+    });
+
+  }
+
+  
+  onFileChange(event){
+
+    this.uploadFiles = [];
+
+    const size = event.srcElement.files[0].size;
+
+    console.log(size)
+
+    if (size < 1000000) 
+    { 
+     if(event.target.files.length <=10){
+           
+      for (var i = 0; i < event.target.files.length; i++) {
+        this.uploadFiles.push(event.target.files[i]);
+      }
+    } else{
+        this.globalutilityService.errorAlertMessage("Maximum 2 File Allow to upload");
+      }
+
+    }else{
+    this.globalutilityService.errorAlertMessage("File Size greater 1 Mb");
+    }
+  }
+
+  deleteFieldValue(index) {
+    if (this.uploadFiles.length <= 1) {
+      this.uploadFiles.splice(index, 1);
+      this.resetFile();
+    } else {
+      this.uploadFiles.splice(index, 1);
+    }
+  }
+
+    
+  resetFile() {
+    this.attachmentMoreForm.patchValue({
+      attachment: '',
+    });
+
+  }
+ 
+ 
 
   getIncidentStatusByIncidentNumber(incidentNumber: any) {
     this.incidentStatusService.getIncidentStatusByIncidentNumber(incidentNumber).subscribe(success => {
@@ -106,6 +175,23 @@ export class ViewIncidentComponent implements OnInit {
 
   }
 
+  viewFileClicked(file: any) {
+    console.log("file view Clicked");
+    console.log(file);
+    this.fileServices.viewFile(file.incidentNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+      this.saveFile(success, file.originalName)
+    }, error => {
+      this.handleError(error);
+    })
+  }
+
+  onClickAttachmentMore(){
+    this.isAttatchMore = true;
+  }
+
+  onClickAttatchmentBack(){
+    this.isAttatchMore = false;
+  }
 
   
   /**

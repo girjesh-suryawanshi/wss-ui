@@ -2,3 +2,14 @@
     font-size: 20px;
     background-color: #a95c0d;
 }
+.table .thead-dark th {
+    background-color: #a95c0d;
+}
+hr.view{
+    border-top: 5px solid  #17a2b8;
+}
+#titleDiv{
+    display: flex;
+    justify-content: center;
+    height: 0px;
+}

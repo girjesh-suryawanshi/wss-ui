@@ -1,8 +1,8 @@
-<div class="card border-dark">
+<div class="card border-dark" *ngIf="!isView">
     <div class="card-header text-center text-white">TO DO INCIDENT</div>
     <div class="card-body">
       <div *ngIf="!(todoIncidentMasterList && todoIncidentMasterList.length>0)" class="alert alert-warning text-center mt-2 ml-2 mr-2" role="alert">
-        <b> No issue not found !!!</b>     
+        <b> No Incident found !!!</b>     
       </div>
       <div *ngIf="(todoIncidentMasterList && todoIncidentMasterList.length>0)" class="row mb-4">
          <div class="col-md-12">
@@ -20,12 +20,12 @@
                       <th scope="col">Incident No</th>
                       <th scope="col">Incident</th>
                       <th scope="col">Incident Object</th>
-                      <th scope="col">Incident Object type</th>
+                      <!-- <th scope="col">Incident Object type</th> -->
                       <th scope="col">Date</th>
-                      <th scope="col">Assign To</th>
+                      <!-- <th scope="col">Assign To</th> -->
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
-                      <th scope="col">Action</th>
+                      <!-- <th scope="col">Action</th> -->
                      </tr>
                   </thead>
                   <tbody>
@@ -34,20 +34,181 @@
                       <td><small><b>{{todoList.incidentNumber}}</b></small></td>
                       <td><small>{{todoList.incident}}</small></td>
                       <td><small>{{todoList.incidentObject}}</small></td>
-                      <td><small>{{todoList.incidentObjectType}}</small></td>
+                      <!-- <td><small>{{todoList.incidentObjectType}}</small></td> -->
                       <td><small>{{todoList.createdOn | date:'dd/MM/yyyy'}}</small></td>
-                      <td><small>{{todoList.assignedUsername}}&nbsp;({{todoList.assignedName}})</small></td>
+                      <!-- <td><small>{{todoList.assignedUsername}}&nbsp;({{todoList.assignedName}})</small></td> -->
                       <td><small>{{todoList.status}}</small></td>
                       <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(todoList)">View</button></td>
-                      <td></td>
+                      <!-- <td></td> -->
                     </tr>
                   </tbody>
                 </table>
-              </div>
-  
+              </div>  
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="card" *ngIf="isView">
+    <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()"><i
+      class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button>
+    </div>
+    <div class="card-header">
+      <div id="titleDiv">
+        <h3 class="card-title text-white text-center">INCIDENT DETAILS</h3>
+      </div>
+      <div class="card-tools">
+        <button
+          type="button"
+          class="btn btn-tool"
+          data-card-widget="collapse"
+        >
+          <i class="fas fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div>
+        <div class="table-responsive-md">
+          <table class="table table-hover">
+             <tbody>
+              <tr>
+                <td><b>Incident Number</b></td>
+                <td><span class="badge badge-warning rounded-0 p-1">{{viewToDoIncident.incidentNumber}}</span></td>
+                <td><b>Status</b></td>
+                <td><span *ngIf="viewToDoIncident.status==='SUBMITTED'"
+                    class="badge badge-success rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span
+                    *ngIf="viewToDoIncident.status==='PENDING'"
+                    class="badge badge-danger rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span
+                    *ngIf="viewToDoIncident.status==='FORWARDED'"
+                    class="badge badge-primary rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span
+                    *ngIf="viewToDoIncident.status==='REJECTED'"
+                    class="badge badge-warning rounded-0 p-1">{{viewToDoIncident.status}}</span>
+      
+                  </td>
+              </tr>
+              
+              <tr>
+                <td><b>Created By</b></td>
+                <td>{{viewToDoIncident.username}} ( {{viewToDoIncident.name}} )</td>
+                <td><b>Created On</b></td>
+                <td>{{viewToDoIncident.createdOn | date:'medium' }}</td>
+              </tr>
+      
+              <tr>
+                <td><b>Location code</b></td>
+                <td>{{viewToDoIncident.locationCode}}</td>
+                <td><b>Location Name</b></td>
+                <td>{{viewToDoIncident.locationName}}</td>
+              </tr>
+
+
+              <tr>
+                <td><b>Mobile Number</b></td>
+                <td>{{viewToDoIncident.mobileNumber}}</td>
+                <td><b>Employee Type</b></td>
+                <td>{{viewToDoIncident.employeeType}}</td>
+              </tr>
+      
+              <tr>
+                <td><b>Incident</b></td>
+                <td>{{viewToDoIncident.incident}}</td>
+                <td><b>Incident Object</b></td>
+                <td>{{viewToDoIncident.incidentObject}}</td>
+              </tr>
+              <tr>
+                <td><b>Incident Object Type</b></td>
+                <td>{{viewToDoIncident.incidentObjectType}}</td>
+                <td><b>Incident Description</b></td><td>{{viewToDoIncident.incidentDescription}}</td>
+              </tr>
+              
+            </tbody>
+      
+          </table>
+          
+          <table class="table table-responsive-md" *ngIf="files && files.length>0">
+            <thead class="thead-dark text-center">
+              <th colspan="3">
+                <h5>ATTACHED FILES</h5>
+              </th>
+            </thead>
+            <tbody>
+              <tr>
+                <th>#</th>
+                <th>File name</th>
+                <th>Action</th>
+              </tr>
+              <tr *ngFor="let file of files let i = index">
+                <td>{{i+1}}</td>
+                <td><small>{{file.originalName}}</small></td>
+                <td><button class="btn btn-info btn-sm" (click)="viewFileClicked(file)"><i class="fa fa-download fa-lg" aria-hidden="true"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- /.card-pane-right -->
+      </div>
+      <!-- /.d-md-flex -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+  
+<div class="card" *ngIf="isView">
+  <div class="card-header">
+   <div id="titleDiv"><h3 class="card-title text-white text-xs-center">INCIDENT CURRENT STATUS</h3></div>
+
+   <div class="card-tools">
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="collapse">
+       <i class="fas fa-minus"></i>
+     </button>      
+   </div>
+ </div>
+ <!-- /.card-header -->
+ <div class="card-body">
+   <div *ngIf="incidentStatusList && incidentStatusList.length>0">
+     <!-- <hr> -->
+     <table class="table table-responsive-md">
+           
+       <tbody>
+         <tr>
+           <th>#</th>
+           <th>Incident Number</th>
+           <th>Status</th>
+           
+           <th>Comments</th>
+           <th>Assigned User</th>
+           <th>Date/Time</th>
+         </tr>
+         <tr *ngFor="let status of incidentStatusList let i = index">
+           <td><small>{{i+1}}</small></td>
+           <td><small><b>{{status.incidentNumber}}</b></small></td>
+           <td><span *ngIf="status.status==='SUBMITTED'"
+             class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+           <span *ngIf="status.status==='REJECTED'"
+             class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
+           <span *ngIf="status.status==='PENDING'"
+             class="badge badge-danger rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='FORWARDED'"
+             class="badge badge-primary rounded-0 p-1">{{status.status}}</span></td>
+             <td><small>{{status.userComments}}</small></td>
+           <td><small>{{status.username}}({{status.name}})</small></td>
+           <td><small>{{status.createdOn | date:'medium'}}</small></td>            
+         </tr>
+       </tbody>
+     </table>
+   </div> 
+   <!-- /.d-md-flex -->
+ </div>
+ <!-- /.card-body -->
+</div>
