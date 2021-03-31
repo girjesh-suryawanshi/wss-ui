@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { IncidentMasterService } from 'src/app/services/project/incident-master.service';
 import { GobalutilityService } from 'src/app/utility/gobalutility.service';
+import { FileServiceService } from 'src/app/services/project/file-service.service';
+import { IncidentStatusService } from 'src/app/services/project/incident-status.service';
 
 @Component({
   selector: 'app-view-incident',
@@ -14,8 +16,13 @@ export class ViewIncidentComponent implements OnInit {
   locationCode: string;
   incidentMasterList: any;
   dtOptions: any = {};
+  isView: boolean;
+  viewIncident: any;
+  files: any;
+  incidentStatusList: any;
 
-  constructor(private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService, private incidentMasterService: IncidentMasterService) { }
+  constructor(private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService, private incidentMasterService: IncidentMasterService,
+    private fileServices:FileServiceService,private incidentStatusService:IncidentStatusService) { }
 
   ngOnInit(): void {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
@@ -51,5 +58,78 @@ export class ViewIncidentComponent implements OnInit {
     })
 
   }
+
+  public onClickView(incidentMaster: any) {
+
+    this.viewIncident = incidentMaster;
+    this.isView = true;
+    this.getFileByIncidentNumber(incidentMaster.incidentNumber);
+    this.getIncidentStatusByIncidentNumber(incidentMaster.incidentNumber);
+      
+  }
+
+  getIncidentStatusByIncidentNumber(incidentNumber: any) {
+    this.incidentStatusService.getIncidentStatusByIncidentNumber(incidentNumber).subscribe(success => {
+
+      if (success.status === 200) {
+        console.log("Getting Current incident Status of problem by incident number");
+        this.incidentStatusList = success.body;
+        console.log(this.incidentStatusList);
+       }if (success.status === 204) {
+        console.log(success);
+      }
+    }, error => {
+      console.log(error);
+    })
+  }
+  
+
+  getFileByIncidentNumber(incidentNumber: any) {
+
+    this.fileServices.getFileByIncidentNumber(incidentNumber).subscribe(success => {
+
+      console.log("Getting File");
+
+      console.log(success.body);
+
+      this.files = success.body;
+
+    }, error => {
+      console.log("Getting Error");
+      console.log(error);
+    })
+
+  }
+
+  public onClickBack() {
+    this.isView = false;
+
+  }
+
+
+  
+  /**
+   * Save blob to file
+   * @param blob
+   */
+   saveFile(success: any, fileName: string) {
+    if (success) {
+      // this.exportType ="pdf"
+      let blob = GobalutilityService.createBlobFromResponse(success);
+      this.globalutilityService.saveFile(blob, fileName);
+      // this.reset();
+    }
+  }
+
+  /**
+   * Handle errors
+   * @param error
+   */
+  handleError(error: any) {
+    this.globalutilityService.parseStringFromBlob(error.error);
+    // this.reset();
+    this.globalutilityService.errorAlertMessage("Unable to download file.");
+  }
+
 
 }

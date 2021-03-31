@@ -19,3 +19,8 @@
 .dataTables_length{
   margin-left: 5px !important;
 }
+.btn-info {
+  color: #fff;
+  background-color: #a95c17;
+  border-color: #301a02;
+}

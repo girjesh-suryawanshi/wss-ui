@@ -2,3 +2,22 @@
     font-size: 20px;
     background-color: #a95c0d;
 }
+#titleDiv{
+    display: flex;
+    justify-content: center;
+    height: 0px;
+}  
+.modal-header{
+  display: flex;
+  justify-content: center;
+  background-color: #17a2b8;
+  
+ }
+ .table .thead-dark th {
+    background-color: #a95c0d;
+}
+.btn-info {
+    color: #fff;
+    background-color: #a95c17;
+    border-color: #301a02;
+  }
