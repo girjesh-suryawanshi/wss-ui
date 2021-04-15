@@ -27,8 +27,8 @@ export class AddIncidentComponent implements OnInit {
   isDepartment: boolean;
 
   incidentMasterModal :IncidentMaster
-
-  myFiles: any[];
+ 
+  myFiles: File[] = [];
   isProcessing: boolean;
   loggedInUser: User;
   role: string;
@@ -70,10 +70,16 @@ export class AddIncidentComponent implements OnInit {
     console.log(this.incidentMasterForm.value);
     if (this.incidentMasterForm.value.incidentObject == 'Human') {
       this.isHuman = true;
+      const validators = [Validators.required];
+      this.incidentMasterForm.addControl('incidentObjectType', new FormControl('', validators));
+      this.incidentMasterForm.addControl('employeeType', new FormControl('', validators));
                   
     } else {
+      
       this.isHuman = false;
-      this.isDepartment = false;     
+      this.isDepartment = false;
+      this.incidentMasterForm.removeControl('incidentObjectType'); 
+      this.incidentMasterForm.removeControl('employeeType');      
 
     }
 
@@ -168,7 +174,7 @@ export class AddIncidentComponent implements OnInit {
 
     });
   }
-
+ 
 
   onSubmitIncidentMasterForm() {
     
