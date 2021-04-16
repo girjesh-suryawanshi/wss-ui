@@ -96,9 +96,12 @@ export class AddIncidentComponent implements OnInit {
     console.log(this.incidentMasterForm.value.incidentobjecType);
     if (this.incidentMasterForm.value.incidentObjectType == 'Department') {
       this.isDepartment = true;
+      const validators = [Validators.required];
+       this.incidentMasterForm.addControl('employeeType', new FormControl('', validators));
       
     } else {
       this.isDepartment = false;
+      this.incidentMasterForm.removeControl('employeeType');      
            
     }
 
@@ -189,6 +192,8 @@ export class AddIncidentComponent implements OnInit {
           this.isProcessing = false;
           this.resetIncidentMasterForm();
           this.incidentNumber = success.body;
+          this.isHuman = false;
+          this.isDepartment = false;
           this.globalutilityService.successAlertMessage("Incident Registered Successfully With Id:" + this.incidentNumber.incidentNumber);
         }
       }, error => {
@@ -196,6 +201,8 @@ export class AddIncidentComponent implements OnInit {
           this.isProcessing = false;
           this.globalutilityService.errorAlertMessage("Unable to registered incident");
           this.resetIncidentMasterForm();
+          this.isHuman = false;
+          this.isDepartment = false;
         }
        })
     }
