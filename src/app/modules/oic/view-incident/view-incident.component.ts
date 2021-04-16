@@ -49,9 +49,8 @@ export class ViewIncidentComponent implements OnInit {
       lengthMenu : [10, 25, 50],
       processing: true
     };
-    
-    
   }
+
   getIncidentByUseranmeAndLocationcode(username: string, locationCode: string) {
     this.incidentMasterService.getIncidentByUsernameAndLocationCode(username, locationCode).subscribe(success => {
       console.log("Inside Success Assign problem found");
@@ -136,8 +135,6 @@ export class ViewIncidentComponent implements OnInit {
 
   }
  
- 
-
   getIncidentStatusByIncidentNumber(incidentNumber: any) {
     this.incidentStatusService.getIncidentStatusByIncidentNumber(incidentNumber).subscribe(success => {
 
@@ -175,28 +172,48 @@ export class ViewIncidentComponent implements OnInit {
   onAttatchMoreSubmit() {
     this.isProcessing = true;
     this.fileServices.attachMoreFileByIncidentNumber(this.viewIncident.incidentNumber, this.attachmentMoreForm.value.comments,this.uploadFiles).subscribe(success => {
+      console.log("Inside success");
+
+      console.log(success);
+
+      console.log(success.body);
+      
+      
+      
       if (success.status === 201) {
         this.globalutilityService.successAlertMessage("File Upload successfully");
         this.isProcessing = false;
-        // this.resetResolveForm();
-        // this.onClickResolveBack();
-        // this.isView = false;
+         this.resetAttachMoreForm();
+         this.attachMoreFileBack();
+         this.getFileByIncidentNumber(this.viewIncident.incidentNumber);
       }
       // this.getAllAssignedProblemStatement(this.username);
     }, error => {
+      
       if (error.status === 417) {
         this.isProcessing = false;
-        // this.resetResolveForm();
-        // this.onClickResolveBack();
+        this.resetAttachMoreForm();
+        this.attachMoreFileBack();
         this.isView = false;
         this.globalutilityService.errorAlertMessage("Unable to Upload file!!");
       }
     })
   }
+  attachMoreFileBack() {
+    this.isAttatchMore = false;
+  }
 
   public onClickBack() {
     this.isView = false;
 
+  }
+
+  resetAttachMoreForm() {
+    this.uploadFiles = [];
+    this.attachmentMoreForm.patchValue({
+      comments: '',
+      isAttachment:''
+    });
   }
 
   viewFileClicked(file: any) {

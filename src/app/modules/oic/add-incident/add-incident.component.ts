@@ -129,8 +129,6 @@ export class AddIncidentComponent implements OnInit {
     }
   }
 
-
-
   onFileChange(event) {
 
     this.myFiles = [];

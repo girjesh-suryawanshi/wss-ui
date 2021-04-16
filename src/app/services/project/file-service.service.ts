@@ -50,10 +50,7 @@ export class FileServiceService {
     formData.append('comments',comments);
     // formData.append('requestInformation', JSON.stringify(requestInformation));
 
-    return this.http.post(this.contextPath + 'incident-master/attach-file/', formData, { observe: 'response' }).pipe(
-      map((response: HttpResponse<any>) => {
-        return response;
-      }));
+    return this.http.post(this.contextPath + 'incident-master/attach-file/', formData, { observe: 'response' });
   }
 
 }
