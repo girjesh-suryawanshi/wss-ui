@@ -7,6 +7,7 @@ import { FileServiceService } from 'src/app/services/project/file-service.servic
 import { IncidentStatusService } from 'src/app/services/project/incident-status.service';
 import { GlobalConstants } from 'src/app/utility/global.constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RequestInformationService } from 'src/app/services/project/request-information.service';
 
 
 @Component({
@@ -28,17 +29,43 @@ export class ToDoIncidentComponent implements OnInit {
   incidentStatusList: any;
   isAttatchMore: boolean;
   attachmentMoreForm: FormGroup;
+  isApprove: boolean;
+  isRequestInfo: boolean;
+  isReject: boolean;
+  requestInfoForm: FormGroup;
+  approveForm: FormGroup;
+  rejectForm: FormGroup;
+  requestInfoUser: any;
+  requestInfoObject: any = {};
+  name: string;
 
   constructor(private authorizationService: AuthorizationService, 
     private globalutilityService: GobalutilityService, 
     private todoIncidentMasterService: ToDoIncidentService,
-    private filesService:FileServiceService,private IncidentStatusService :IncidentStatusService) { }
+      private filesService:FileServiceService,
+      private requestInformationService: RequestInformationService,
+      private incidentStatusService :IncidentStatusService) { }
 
   ngOnInit(): void {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
+    this.name = this.loggedInUser.getName();
     this.getToDoIncidentByUseranme(this.username);
+
+    this.requestInfoForm = new FormGroup({
+      remark: new FormControl('', Validators.required),
+      user: new FormControl('', Validators.required)
+
+    });
+
+     this.approveForm = new FormGroup({
+      comments: new FormControl('', Validators.required),
+    });
+
+    this.rejectForm = new FormGroup({
+      comments: new FormControl('', Validators.required),
+    });
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -104,7 +131,7 @@ export class ToDoIncidentComponent implements OnInit {
   }
 
   getIncidentStatusByTokenNumber(incidentNumber: any) {
-    this.IncidentStatusService.getIncidentStatusByIncidentNumber(incidentNumber).subscribe(success => {
+    this.incidentStatusService.getIncidentStatusByIncidentNumber(incidentNumber).subscribe(success => {
 
       if (success.status === 200) {
         this.incidentStatusList = success.body;
@@ -132,6 +159,109 @@ export class ToDoIncidentComponent implements OnInit {
   public onClickBack() {
     this.isView = false;
   }
+
+  onClickApprove(ps: any) {
+    console.log("On click approve");
+    console.log(ps);
+    
+    
+    this.isReject = false;
+    this.isRequestInfo = false;
+    this.isApprove = true;
+  }
+
+  onClickResolveBack() {
+     this.isReject = false;
+    this.isRequestInfo = false;
+    this.isApprove = false;
+  }
+  onClickReject(ps: any) {
+    this.isReject = true;
+    this.isRequestInfo = false;
+    this.isApprove = false;
+    console.log("Resolve Issue Clicked");
+    console.log(ps);
+
+  }
+
+  onClickRejectBack() {
+    this.isReject = false;
+    this.isRequestInfo = false;
+    this.isApprove = false;
+
+  }
+
+  onClickRequestInfo(viewIssue: any) {
+    this.isReject = false;
+    this.isRequestInfo = true;
+    this.isApprove = false;
+    console.log("request info click");
+    console.log(viewIssue);
+    this.incidentStatusService.getIncidentStatusByIncidentNumber(viewIssue.incidentNumber).subscribe(success => {
+      console.log("Get issue status");
+      console.log(success);
+      this.requestInfoUser = success.body;
+      console.log(this.requestInfoUser);
+
+    }, error => {
+
+      console.log("error");
+    })
+  }
+
+  public onClickRequestInfoBack() {
+    this.isRequestInfo = false;
+    this.reset();
+  }
+
+
+  reset() {
+    this.requestInfoForm.patchValue({
+      remark: '',
+      user: ''
+    });
+  }
+
+
+  onSubmitRequestInfo() {
+    this.prepareRequestInfoObject();
+    console.log("Request info object");
+    console.log(this.requestInfoForm);
+    console.log(this.requestInfoForm.value);   
+    
+    this.requestInformationService.requestInformationToOrigin(this.requestInfoObject).subscribe(success => {
+      console.log("Inside success");
+      console.log(success);
+      if (success.status === 201) {
+        this.globalutilityService.successAlertMessage("Request info sent successfully")
+        this.reset();
+        this.isRequestInfo = false;
+        this.isView = false;        
+      }
+    },
+      error => {
+        if (error.status === 417) {
+          this.globalutilityService.errorAlertMessage("Unable to sent request info");
+          this.isRequestInfo = false;
+        }
+
+      })
+  }
+
+  prepareRequestInfoObject() {
+    this.requestInfoObject.incidentNumber = this.requestInfoForm.value.user.incidentNumber;
+    this.requestInfoObject.username = this.requestInfoForm.value.user.createdBy;
+    this.requestInfoObject.name = this.requestInfoForm.value.user.createdName;
+    this.requestInfoObject.requestedUsername = this.username;
+    this.requestInfoObject.requestedName = this.name;
+    this.requestInfoObject.requestMessage = this.requestInfoForm.value.remark;
+    
+  }
+
+
+
+
+
 
   /**
    * Save blob to file

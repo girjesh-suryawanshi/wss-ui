@@ -31,7 +31,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Token number</th>
+          <th scope="col">Incident number</th>
           <th scope="col">Request Message</th>
           <th scope="col">Requested By</th>
           <th scope="col">Requested On</th>
@@ -41,7 +41,7 @@
       <tbody>
         <tr *ngFor="let info of requestInfo let i = index">
           <td>{{i+1}}</td>
-          <td><small><b>{{info.tokenNumber}}</b></small></td>
+          <td><small><b>{{info.incidentNumber}}</b></small></td>
           <td><small>{{info.requestMessage}}</small></td>
           <td><small>{{info.requestedUsername}}({{info.requestedName}})</small></td>
           <td><small>{{info.createdOn | date:'medium'}}</small></td>
@@ -81,7 +81,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Token number</th>
+          <th scope="col">Incident number</th>
           <th scope="col">Request Message</th>
           <th scope="col">Response Message</th>
           <th scope="col">Response by</th>
@@ -92,7 +92,7 @@
       <tbody>
         <tr *ngFor="let info of requestInfoList let i = index">
           <td>{{i+1}}</td>
-          <td><small><b>{{info.tokenNumber}}</b></small></td>
+          <td><small><b>{{info.incidentNumber}}</b></small></td>
           <td><small>{{info.requestMessage}}</small></td>
           <td><small>{{info.responseMessage}}</small></td>
           <td><small>{{info.username}}({{info.name}})</small></td>
@@ -127,8 +127,8 @@
           <table class="table table-responsive-md">
             <tbody>
               <tr>
-                <td>Token Number</td>
-                <td><small><b>{{viewRequest.tokenNumber}}</b></small></td>
+                <td>Incident Number</td>
+                <td><small><b>{{viewRequest.incidentNumber}}</b></small></td>
               </tr>
               <tr>
                 <td>Reply Message</td>
@@ -193,7 +193,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Token number</th>
+          <th scope="col">Incident number</th>
           <th scope="col">Request Message</th>
           <th scope="col">Response Message</th>
           <th scope="col">Response by</th>
@@ -204,7 +204,7 @@
       <tbody>
         <tr *ngFor="let info of replyInfoList let i = index">
           <td>{{i+1}}</td>
-          <td><small><b>{{info.tokenNumber}}</b></small></td>
+          <td><small><b>{{info.incidentNumber}}</b></small></td>
           <td><small>{{info.requestMessage}}</small></td>
           <td><small>{{info.responseMessage}}</small></td>
           <td><small>{{info.username}}({{info.name}})</small></td>

@@ -253,19 +253,17 @@
 </div>
 
 <hr *ngIf="isView"  class="view">
-<div *ngIf="isView" class="d-flex justify-content-center mr-2">
+
+<div  class="d-flex justify-content-center mr-2">
   <div>
     <button class="btn btn-success btn-sm mr-4" [disabled]="isDisable"
-      (click)="onClickResolve(viewIssue)">Resolve</button>
+      (click)="onClickResolve(viewIssue)">Approve</button>
   </div>
   <div>
     <button class="btn btn-warning btn-sm mr-4" [disabled]="isDisable"
       (click)="onClickReject(viewIssue)">Reject</button>
   </div>
-  <div>
-    <button  *ngIf="locationCode!=='34420124'" class="btn btn-primary btn-sm mr-4" [disabled]="isDisable"
-      (click)="onClickforward(viewIssue)">Forward</button>
-  </div>
+  
   <div>
     <button class="btn btn-info btn-sm" [disabled]="isDisable" (click)="onClickRequestInfo(viewIssue)">Request
       Info</button>

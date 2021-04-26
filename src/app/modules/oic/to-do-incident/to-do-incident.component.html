@@ -212,3 +212,114 @@
  </div>
  <!-- /.card-body -->
 </div>
+
+
+
+
+<hr *ngIf="isView"  class="view">
+
+<div *ngIf="isView" class="d-flex justify-content-center mr-2">
+  <div>
+    <button class="btn btn-success btn-sm mr-4" [disabled]="isDisable" (click)="onClickApprove(viewToDoIncident)">Approve</button>
+  </div>
+  <div>
+    <button class="btn btn-warning btn-sm mr-4" [disabled]="isDisable" (click)="onClickReject(viewToDoIncident)">Reject</button>
+  </div>
+  
+  <div>
+    <button class="btn btn-info btn-sm" [disabled]="isDisable" (click)="onClickRequestInfo(viewToDoIncident)">Request Info</button>
+  </div>
+</div>
+
+
+<div class="card mt-2" *ngIf="isApprove">
+  <div class="card-header text-center text-white">APPROVE INCIDENT</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm" (click)="onClickResolveBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+    <form [formGroup]="approveForm" (ngSubmit)="onResolveSubmit()">
+      <table class="table d-flex justify-content-center">
+        <tbody>
+          <tr>
+            <th>Incident Number</th>
+            <td><small>{{viewToDoIncident.incidentNumber}}</small></td>
+          </tr>
+          <tr>
+            <th>comments</th>
+            <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks" required></textarea></td>
+          </tr>
+           <tr>
+            <th></th>
+           <td><button type="submit" [disabled]="approveForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+
+<div class="card mt-2" *ngIf="isReject">
+  <div class="card-header text-center text-white">REJECT ISSUE</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm" (click)="onClickRejectBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+    <form [formGroup]="rejectForm" (ngSubmit)="onRejectSubmit()">
+      <table class="table d-flex justify-content-center">
+        <tbody>
+          <tr>
+            <th>Incident Number</th>
+            <td><small>{{viewToDoIncident.incidentNumber}}</small></td>
+          </tr>
+          <tr>
+            <th>comments</th>
+            <td><textarea class="form-control" rows="2" id="remark" formControlName="comments" name="remarks"
+                required></textarea></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><button type="submit" [disabled]="rejectForm.invalid" class="btn btn-primary btn-sm ml-5">Submit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+
+
+<div class="card mt-2" *ngIf="isRequestInfo">
+  <div class="card-header text-center text-white">REQUEST INFO</div>
+  <div class="card-body">
+    <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm" (click)="onClickRequestInfoBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
+
+    <form [formGroup]="requestInfoForm" (ngSubmit)="onSubmitRequestInfo()">
+
+      <table class="table d-flex justify-content-center">
+        <tbody>
+          <tr>
+            <th>Incident Number</th>
+            <td><small>{{viewToDoIncident.incidentNumber}}</small></td>
+          </tr>
+          <tr>
+            <th>Request to</th>
+            <td>
+              <div>
+                <select class="form-control" name="requestinfo" formControlName="user" required>
+                  <option value="" disabled>Select user</option>
+                  <option *ngFor="let info of requestInfoUser" [ngValue]="info" class="form-control form-control-sm text-center">
+                    {{info.createdBy}}&nbsp;{{info.createdName}}</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Remark</th>
+            <td><textarea class="form-control" rows="2" formControlName="remark" required></textarea></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><button type="submit" [disabled]="requestInfoForm.invalid"  class="btn btn-primary btn-sm ml-5">Submit</button></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
