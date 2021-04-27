@@ -89,8 +89,8 @@ export class LoginModalComponent implements OnInit {
           if(this.authorizationService.isLogedIn()){
             this.isRelogin = true;
             this.loggedUser = this.authorizationService.getLoggedInUser();
-            this.generateOTP();
-            // this.modalInstance.close("Logged In successfully");
+            // this.generateOTP();
+            this.modalInstance.close("Logged In successfully");
           }else {
             console.log(this.CLASS_NAME + "Unable to login user");
             this.loginError = true;
