@@ -28,8 +28,8 @@ export class DashboardComponent implements OnInit {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
     this.countByUsername(this.username);
-    this.countByUsernameAndStatusPending(this.username,'PENDING');
-     this.countByUsernameAndStatusResolve(this.username,'COMPLETED');
+    this.countByUsernameAndStatusPending(this.username,'SUBMITTED');
+     this.countByUsernameAndStatusResolve(this.username,'APPROVED');
      this.countByUsernameAndStatusForwarded(this.username,'FORWARDED');
      this.countByUsernameAndStatusRejected(this.username,'REJECTED');
      this.countByAssignUsername(this.username);
@@ -149,6 +149,7 @@ export class DashboardComponent implements OnInit {
       
     },error=>{})
   }
+
   countByUsernameAndStatusPending(username: any, status: string) {
     this.dashboardService.countByUsernameAndStatus(username,status).subscribe(success=>{
       console.log("inside success");
@@ -161,7 +162,9 @@ export class DashboardComponent implements OnInit {
       }
       
     },error=>{})
+
   }
+
   countByUsername(username: any) {
     this.dashboardService.countByUsername(username).subscribe(success => {
       console.log("success");

@@ -13,6 +13,7 @@ export class DashboardService {
         return response;
       }));
   }
+
   countAssignByUsername(assignUsername: any) {
     return this.http.get(this.contextPath + '/project-problem-assignment/assign-username/' + assignUsername, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
@@ -21,13 +22,14 @@ export class DashboardService {
   }
 
   countByUsername(username: any) {
-    return this.http.get(this.contextPath + '/issue-master/user-name/' + username, { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + '/incident-master/user-name/' + username, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
   }
+
   countByUsernameAndStatus(username: any,status:any) {
-    return this.http.get(this.contextPath + '/issue-master/user-name/' + username +'/status/'+status, { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + '/incident-master/user-name/' + username +'/status/'+status, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
