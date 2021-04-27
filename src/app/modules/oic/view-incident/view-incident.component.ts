@@ -27,6 +27,7 @@ export class ViewIncidentComponent implements OnInit {
   attachmentMoreForm: FormGroup;
   uploadFiles: any[];
   isProcessing: boolean;
+  isSubmitted: boolean;
 
   constructor(private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService, private incidentMasterService: IncidentMasterService,
     private fileServices:FileServiceService,private incidentStatusService:IncidentStatusService) { }
@@ -75,6 +76,12 @@ export class ViewIncidentComponent implements OnInit {
 
   public onClickView(incidentMaster: any) {
     this.viewIncident = incidentMaster;
+    if(this.viewIncident.status==='SUBMITTED'){
+      this.isSubmitted = true;
+    }else{
+      this.isSubmitted = false;
+    }
+
     this.isView = true;
     this.getFileByIncidentNumber(incidentMaster.incidentNumber);
     this.getIncidentStatusByIncidentNumber(incidentMaster.incidentNumber);      

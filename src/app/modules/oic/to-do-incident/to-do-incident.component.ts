@@ -41,6 +41,7 @@ export class ToDoIncidentComponent implements OnInit {
   name: string;
   requestInfoList: any=[];
   isProcessing: boolean;
+  isDisable: boolean;
 
   constructor(private authorizationService: AuthorizationService, 
       private globalutilityService: GobalutilityService, 
@@ -105,7 +106,13 @@ export class ToDoIncidentComponent implements OnInit {
   
   public onClickView(ps: any) {
     console.log("Checking Status");
-    console.log(ps.status)      
+    console.log(ps.status)  
+    if (ps.status === 'SUBMITTED') {
+      this.isDisable = false;
+    } else {
+      this.isDisable = true;
+    }
+    
     this.viewToDoIncident = ps;
     this.isView = true;
     this.getFileByIncidentNumber(ps.incidentNumber);
@@ -317,6 +324,34 @@ export class ToDoIncidentComponent implements OnInit {
   }
 
 
+  onRejectSubmit() {
+    this.isProcessing = true;
+    this.incidentMaster.rejectIncidentByIncidentNumber(this.viewToDoIncident.incidentNumber, this.rejectForm.value.comments).subscribe(success => {
+      if (success.status === 201) {
+        this.globalutilityService.successAlertMessage("Incident rejected successfully");
+        this.isProcessing = false;
+        this.resetRejectForm();
+        this.isReject = false;
+        this.getToDoIncidentByUseranme(this.username);
+        this.onClickResolveBack();
+        this.isView = false;
+      }
+      
+    }, error => {
+      if (error.status === 417) {
+        this.isProcessing = false;
+        this.resetRejectForm();
+        this.globalutilityService.errorAlertMessage("Unable to reject Incident !!");
+      }
+    })
+
+  }
+
+  resetRejectForm() {
+    this.rejectForm.patchValue({
+      comments: ''
+    });
+  }
 
 
 

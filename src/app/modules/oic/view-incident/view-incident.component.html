@@ -30,14 +30,19 @@
                   </thead>
                   <tbody>
                     <tr *ngFor=" let i = index let incidentMaster of incidentMasterList">
-                      <td><small>{{i+1}}</small></td>
-                      <td><small><b>{{incidentMaster.incidentNumber}}</b></small></td>
-                      <td><small>{{incidentMaster.incident}}</small></td>
-                      <td><small>{{incidentMaster.incidentObject}}</small></td>
+                      <td>{{i+1}}</td>
+                      <td><b>{{incidentMaster.incidentNumber}}</b></td>
+                      <td>{{incidentMaster.incident}}</td>
+                      <td>{{incidentMaster.incidentObject}}</td>
                       <!-- <td><small>{{incidentMaster.incidentObjectType}}</small></td> -->
-                      <td><small>{{incidentMaster.createdOn | date:'dd/MM/yyyy'}}</small></td>
-                      <td><small>{{incidentMaster.assignedUsername}}&nbsp;({{incidentMaster.assignedName}})</small></td>
-                      <td><small>{{incidentMaster.status}}</small></td>
+                      <td>{{incidentMaster.createdOn | date:'dd/MM/yyyy'}}</td>
+                      <td>{{incidentMaster.assignedUsername}}&nbsp;({{incidentMaster.assignedName}})</td>
+                      <td>
+                        <span *ngIf="incidentMaster.status==='SUBMITTED'" class="badge badge-success rounded-0 p-1">{{incidentMaster.status}}</span>
+                        
+                        <span *ngIf="incidentMaster.status==='APPROVED'" class="badge badge-primary rounded-0 p-1">{{incidentMaster.status}}</span>
+
+                        <span *ngIf="incidentMaster.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{incidentMaster.status}}</span> </td>
                       <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(incidentMaster)">View</button></td>
                       <!-- <td></td> -->
                     </tr>
@@ -220,8 +225,8 @@
    <!-- /.card-body -->
   </div>
 
-<hr *ngIf="isView"  class="view">
-<div *ngIf="isView" class="d-flex justify-content-center mr-2">
+<hr *ngIf="isSubmitted && isView"  class="view">
+<div *ngIf="isSubmitted && isView" class="d-flex justify-content-center mr-2">
   <div>
     <button class="btn btn-info btn-sm mr-4"(click)="onClickAttachmentMore(viewIssue)">Attach More Document</button>
   </div>
