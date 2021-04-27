@@ -2,7 +2,7 @@ export class RequestInfo {
 
     public id:number;
 
-    public tokenNumber: string;
+    public incidentNumber: string;
 
     public username: string;
 
@@ -23,11 +23,11 @@ export class RequestInfo {
         return this.id;
     }
 
-    setTokenNumber(tokenNumber: string) {
-        this.tokenNumber = tokenNumber;
+    setIncidentNumber(incidentNumber: string) {
+        this.incidentNumber = incidentNumber;
     }
-    getTokenNumber(): string {
-        return this.tokenNumber;
+    getIncidentNumber(): string {
+        return this.incidentNumber;
     }
 
     setUsername(username: string) {

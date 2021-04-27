@@ -35,4 +35,18 @@ export class IncidentMasterService {
         return response;
       }));
   }
+
+  approveIncidentByIncidentNumber(incidentNumber:string,comments:string) {
+    let formData = new FormData();
+    
+    formData.append('incidentNumber',incidentNumber);
+    formData.append('comments',comments);
+    // formData.append('requestInformation', JSON.stringify(requestInformation));
+
+    return this.http.post(this.contextPath + 'incident-assign-master/accept', formData, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
 }

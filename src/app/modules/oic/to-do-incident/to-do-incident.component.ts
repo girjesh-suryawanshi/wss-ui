@@ -8,6 +8,7 @@ import { IncidentStatusService } from 'src/app/services/project/incident-status.
 import { GlobalConstants } from 'src/app/utility/global.constants';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RequestInformationService } from 'src/app/services/project/request-information.service';
+import { IncidentMasterService } from 'src/app/services/project/incident-master.service';
 
 
 @Component({
@@ -38,12 +39,15 @@ export class ToDoIncidentComponent implements OnInit {
   requestInfoUser: any;
   requestInfoObject: any = {};
   name: string;
+  requestInfoList: any=[];
+  isProcessing: boolean;
 
   constructor(private authorizationService: AuthorizationService, 
-    private globalutilityService: GobalutilityService, 
-    private todoIncidentMasterService: ToDoIncidentService,
+      private globalutilityService: GobalutilityService, 
+      private todoIncidentMasterService: ToDoIncidentService,
       private filesService:FileServiceService,
       private requestInformationService: RequestInformationService,
+      private incidentMaster:IncidentMasterService,
       private incidentStatusService :IncidentStatusService) { }
 
   ngOnInit(): void {
@@ -106,7 +110,7 @@ export class ToDoIncidentComponent implements OnInit {
     this.isView = true;
     this.getFileByIncidentNumber(ps.incidentNumber);
      this.getIncidentStatusByTokenNumber(ps.incidentNumber);
-    // this.getByUsernameAndTokenNumber(this.username,ps.tokenNumber);
+    this.getByUsernameAndIncidentNumber(this.username,ps.incidentNumber);
     // this.viewResolveIssueFileClicked(ps);
     // this.viewReopenFileClicked(ps);
     console.log("View Clicked");
@@ -163,17 +167,17 @@ export class ToDoIncidentComponent implements OnInit {
   onClickApprove(ps: any) {
     console.log("On click approve");
     console.log(ps);
-    
-    
     this.isReject = false;
     this.isRequestInfo = false;
     this.isApprove = true;
+    this.reset();
   }
 
   onClickResolveBack() {
      this.isReject = false;
     this.isRequestInfo = false;
     this.isApprove = false;
+    // this.reset();
   }
   onClickReject(ps: any) {
     this.isReject = true;
@@ -181,6 +185,7 @@ export class ToDoIncidentComponent implements OnInit {
     this.isApprove = false;
     console.log("Resolve Issue Clicked");
     console.log(ps);
+    this.reset();
 
   }
 
@@ -258,6 +263,58 @@ export class ToDoIncidentComponent implements OnInit {
     
   }
 
+  getByUsernameAndIncidentNumber(username: any,tokenNumber :any) {
+    this.requestInformationService.getByUsernameAndTokenNumber(username,tokenNumber).subscribe(success => {
+
+      console.log("Getting Information List As view Clicked");
+
+      console.log(success);
+
+      console.log(success.body);
+
+      if(success.status === 200){
+        this.requestInfoList = success.body;
+
+      }else if(success.status === 204){
+        this.requestInfoList =[];
+      }
+
+    }, error => {
+
+      console.log("Insise error");
+    })
+
+  }
+
+  onApproveSubmit() {
+    this.isProcessing = true;
+    this.incidentMaster.approveIncidentByIncidentNumber(this.viewToDoIncident.incidentNumber, this.approveForm.value.comments).subscribe(success => {
+      if (success.status === 201) {
+        this.globalutilityService.successAlertMessage("Issue resolve successfully");
+        this.isProcessing = false;
+        this.resetApproveForm();
+        this.onClickResolveBack();
+        this.isView = false;
+      }
+      this.getToDoIncidentByUseranme(this.username);
+    }, error => {
+      if (error.status === 417) {
+        this.isProcessing = false;
+        this.resetApproveForm();
+        this.onClickResolveBack();
+        this.isView = false;
+        this.globalutilityService.errorAlertMessage("Unable to resolve Issue!!");
+
+      }
+    })
+
+  }
+
+  resetApproveForm() {
+      this.approveForm.patchValue({
+      comments: '',     
+    });
+  }
 
 
 

@@ -119,13 +119,13 @@ export class RequestNotificationComponent implements OnInit {
     this.viewResponse =info;
     this.isRequestedUser =true;
     this.isViewResponse = true;
-    this.getFileByTokenNumber(info.tokenNumber);
-    this.getRequestInformationByTokennumberAndIsReplyTrue(info.tokenNumber,true);
+    this.getFileByTokenNumber(info.incidentNumber);
+    this.getRequestInformationByTokennumberAndIsReplyTrue(info.incidentNumber,true);
     }
 
 
-  getRequestInformationByTokennumberAndIsReplyTrue(tokenNumber: any, isReply: boolean) {
-    this.requestInformationService.getRequestInformationReplyByTokenNumberAndIsReplyTrue(tokenNumber,isReply).subscribe(success=>{
+  getRequestInformationByTokennumberAndIsReplyTrue(incidentNumber: any, isReply: boolean) {
+    this.requestInformationService.getRequestInformationReplyByTokenNumberAndIsReplyTrue(incidentNumber,isReply).subscribe(success=>{
       console.log("Inside Succes getRequestInformationByTokennumberAndIsReplyTrue");
       if(success.status === 200){
         
@@ -203,7 +203,7 @@ export class RequestNotificationComponent implements OnInit {
   preparedRequestObject(){
     this.requestModel = new RequestInfo();
     this.requestModel.setId(this.viewRequest.id);
-    this.requestModel.setTokenNumber(this.viewRequest.tokenNumber);
+    this.requestModel.setIncidentNumber(this.viewRequest.incidentNumber);
     this.requestModel.setUsername(this.viewRequest.username);
     this.requestModel.setName(this.viewRequest.name);
     this.requestModel.setRequestedUsername(this.viewRequest.requestedUsername);
@@ -262,7 +262,7 @@ export class RequestNotificationComponent implements OnInit {
   onClickViewFile(file:any){
     console.log("file view Clicked");
     console.log(file);
-    this.requestInformationService.viewFile(file.tokenNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
+    this.requestInformationService.viewFile(file.incidentNumber, file.name, GlobalConstants.FALSE).subscribe(success => {
       this.saveFile(success, file.originalName)
     }, error => {
       this.handleError(error);

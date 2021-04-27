@@ -8,16 +8,16 @@ import { GlobalConfiguration } from 'src/app/config/global.config';
 })
 export class RequestInformationService {
 
-  getRequestInformationReplyByTokenNumberAndIsReplyTrue(tokenNumber:any,isReply:boolean) {
-    return this.http.get(this.contextPath + '/request-information/order-by-desc/token-number/' + tokenNumber +'/is-reply/'+isReply, { observe: 'response' }).pipe(map(
+  getRequestInformationReplyByTokenNumberAndIsReplyTrue(incidentNumber:any,isReply:boolean) {
+    return this.http.get(this.contextPath + '/request-information/order-by-desc/incident-number/' + incidentNumber +'/is-reply/'+isReply, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
   }
 
 
-  getFileByTokenNumber(tokenNumber:any) {
-    return this.http.get(this.contextPath + '/request-information-file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+  getFileByTokenNumber(incidentNumber:any) {
+    return this.http.get(this.contextPath + '/request-information-file/incident-number/' + incidentNumber, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
@@ -78,9 +78,9 @@ getByUsernameAndTokenNumber(username:string,tokenNumber: string) {
     }));
 }
 
-viewFile(tokenNumber: string, fileName: string, response) {
+viewFile(incidentNumber: string, fileName: string, response) {
   let httpParams = new HttpParams();
-  httpParams = httpParams.append("tokenNumber", tokenNumber)
+  httpParams = httpParams.append("incidentNumber", incidentNumber)
   .append("fileName", fileName)
  
   let options : any = {

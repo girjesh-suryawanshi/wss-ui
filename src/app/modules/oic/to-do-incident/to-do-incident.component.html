@@ -213,6 +213,51 @@
  <!-- /.card-body -->
 </div>
 
+<div class="card" *ngIf="isView && requestInfoList.length>0">
+  <div class="card-header">
+    <div id="titleDiv"> <h3 class="card-title text-white">REQUESTED INFORMATION</h3></div>
+  
+
+   <div class="card-tools">
+     <button
+       type="button"
+       class="btn btn-tool"
+       data-card-widget="collapse"
+     >
+       <i class="fas fa-minus"></i>
+     </button>
+     </div>
+ </div>
+ <!-- /.card-header -->
+ <div class="card-body">
+   <div *ngIf="requestInfoList && requestInfoList.length>0">
+     <!-- <hr> -->
+     <table class="table table-responsive-md">
+           
+       <tbody>
+         <tr>
+           <th>#</th>
+           <th>Incident Number</th>
+           <th>Request Message</th>
+           <th>Requested To</th>
+           <th>Requested By</th>
+           <th>Date/Time</th>
+         </tr>
+         <tr *ngFor="let requestInfo of requestInfoList let i = index">
+           <td><small>{{i+1}}</small></td>
+           <td><small><b>{{requestInfo.incidentNumber}}</b></small></td>
+           <td><small>{{requestInfo.requestMessage}}</small></td>
+           <td><small>{{requestInfo.username}}({{requestInfo.name}})</small></td>
+           <td><small>{{requestInfo.requestedUsername}}({{requestInfo.requestedName}})</small></td>
+           <td><small>{{requestInfo.createdOn |date:'medium'}}</small></td>
+          </tr>
+       </tbody>
+     </table>
+   </div> 
+   <!-- /.d-md-flex -->
+ </div>
+ <!-- /.card-body -->
+</div>
 
 
 
@@ -236,7 +281,7 @@
   <div class="card-header text-center text-white">APPROVE INCIDENT</div>
   <div class="card-body">
     <div class="d-flex justify-content-end"><button class="btn btn-info btn-sm" (click)="onClickResolveBack()"><i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button></div>
-    <form [formGroup]="approveForm" (ngSubmit)="onResolveSubmit()">
+    <form [formGroup]="approveForm" (ngSubmit)="onApproveSubmit()">
       <table class="table d-flex justify-content-center">
         <tbody>
           <tr>
@@ -321,5 +366,13 @@
         </tbody>
       </table>
     </form>
+  </div>
+</div>
+
+
+<div *ngIf="isProcessing">
+  <div class="form-group d-flex justify-content-center mt-3">
+    <label class="font-weight-bold">Processing....</label>
+    <div class="spinner-border text-info"></div>
   </div>
 </div>
