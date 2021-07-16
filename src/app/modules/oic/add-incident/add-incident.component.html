@@ -3,7 +3,19 @@
     <div class="card-body">
         <form [formGroup]="incidentMasterForm" (ngSubmit)="onSubmitIncidentMasterForm()">
             <div class="row">
-                <div class="col-md-3 mb-4 mt-4">
+
+              <div class="col-md-2 mb-4 mt-4">
+                <div>
+                    <select class="form-control" name="incidentList" formControlName="incident" required>
+                        <option value="" disabled>Select Incident Type</option>
+                        <option *ngFor="let incidentType of incidentTypeList" [ngValue]="incidentType"
+                            class="form-control form-control-sm">
+                            {{incidentType}}</option>
+                    </select>
+                </div>
+            </div>
+            
+                <div class="col-md-2 mb-4 mt-4">
                     <div>
                         <select class="form-control" name="incidentList" formControlName="incident" required>
                             <option value="" disabled>Select Incident</option>
@@ -24,6 +36,13 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="col-md-3 mb-4 mt-4">
+                  <div>
+                    <input placeholder="Incident Date" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
+                     <!-- <input type="date" class="form-control" placeholder="Incident Date"> -->
+                  </div>
+              </div>
 
                 <div class="col-md-3 mb-4 mt-4" *ngIf="isHuman">
                     <div>

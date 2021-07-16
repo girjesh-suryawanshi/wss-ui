@@ -16,6 +16,8 @@ export class AddIncidentComponent implements OnInit {
 
   incidentList: any = ['Electrical', 'Non-Electrical'];
 
+  incidentTypeList: any = ['Fatal', 'Non-Fatal'];
+
   incidentObjectList: any = ['Human', 'Animal'];
 
   incidentObjectTypeList: any = ['Department', 'Outsider'];
