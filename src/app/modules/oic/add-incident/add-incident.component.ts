@@ -5,6 +5,7 @@ import { IncidentMaster } from 'src/app/models/incidentMaster.model';
 import { AuthorizationService } from 'src/app/services/authorization-service/authorization.service';
 import { User } from 'src/app/models/user.model';
 import { IncidentMasterService } from 'src/app/services/project/incident-master.service'
+import { FileServiceService } from 'src/app/services/project/file-service.service';
 
 @Component({
   selector: 'app-add-incident',
@@ -40,10 +41,12 @@ export class AddIncidentComponent implements OnInit {
   locationName: string;
   officeType: string;
   incidentNumber: any;
+  fileTemplateNameList: any;
 
 
 
-  constructor(private authorizationService: AuthorizationService,private globalutilityService: GobalutilityService,private incidentMasterService:IncidentMasterService) { }
+  constructor(private authorizationService: AuthorizationService,private globalutilityService: GobalutilityService,private incidentMasterService:IncidentMasterService,
+    private templateFileService:FileServiceService) { }
 
   incidentMasterForm: FormGroup;
 
@@ -65,7 +68,25 @@ export class AddIncidentComponent implements OnInit {
     this.locationCode = this.loggedInUser.getLocationCode();
     this.locationName = this.loggedInUser.getLocationShortName();
     this.officeType = this.loggedInUser.getOfficeType();
+    this.getAllFileTemplate();
   }
+  getAllFileTemplate() {
+  
+    this.templateFileService.getAllFileTemplateName().subscribe(succes => {
+      this.fileTemplateNameList = succes.body;
+      console.log("Getting template file");
+      console.log(this.fileTemplateNameList);
+      
+      
+    }, error => {
+      console.log("error");
+      console.log(error);
+    });
+  }
+  
+ 
+
+
 
   onChangeIncidentObject() {
     this.resetincidentMasterForm();

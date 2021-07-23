@@ -78,6 +78,36 @@
                 </div>
             </div>
 
+
+            <div class="row d-flex justify-content-center">
+
+              <div class="col-md-3 mb-2 mt-2 fileinfo">
+                <div class="form-group">
+                  <label for="template">**Download Sample Template</label>
+                </div>
+            </div>
+
+              <div class="col-md-3 mb-2 mt-2">
+                  <div>
+                    <select class="form-control" name="employeeType" formControlName="employeeType" required>
+                      <option value="" disabled>Select Sample Template</option>
+                      <option *ngFor="let template of fileTemplateNameList" [ngValue]="template"
+                          class="form-control form-control-sm">
+                          {{template.templateName}}</option>
+                  </select>
+                  </div>
+              </div>
+           
+              <div class="col-md-2 mb-2 mt-2">
+                <div >
+                  <button type="button" class="btn btn-info">Download</button>
+                </div>
+            </div>
+
+          </div>
+
+            
+
             <div class="row">
                 <div class="col-md-8 mb-2 mt-2">
                   <div class="form-check">

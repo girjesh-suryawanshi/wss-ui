@@ -53,4 +53,12 @@ export class FileServiceService {
     return this.http.post(this.contextPath + 'incident-master/attach-file/', formData, { observe: 'response' });
   }
 
+  getAllFileTemplateName() {
+    console.log("getAllFileTemplateName");
+    return this.http.get(this.contextPath + '/template-files', { observe: 'response' }).pipe(map(
+      (response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+
 }
