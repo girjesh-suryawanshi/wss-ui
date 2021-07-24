@@ -1,6 +1,7 @@
 export class IncidentMaster{
    
     public username: string;
+    public incidentType: string;
     public name: string;
     public locationCode: string;
     public locationName: string;
@@ -9,6 +10,7 @@ export class IncidentMaster{
     public incidentObject: string;
     public incidentObjectType: string;
     public employeeType: string;
+    public incidentDate:Date;
     public incidentDescription: string;
   
     setName(name: string) {
@@ -19,6 +21,23 @@ export class IncidentMaster{
       return this.name;
   
     }
+
+    setIncidentType(incidentType:string){
+      this.incidentType = incidentType;
+    }
+
+    getIncidentType():string{
+      return this.incidentType;
+    }
+
+    setIncidentDate(incidentDate:Date){
+      this.incidentDate = incidentDate;
+    }
+
+    getIncidentDate():Date{
+      return this.incidentDate;
+    }
+
   
     setIncident(incident:string){
       this.incident = incident;

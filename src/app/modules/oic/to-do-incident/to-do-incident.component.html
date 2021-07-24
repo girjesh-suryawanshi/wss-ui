@@ -18,8 +18,10 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Incident No</th>
+                      <th scope="col">Incident Type</th>
                       <th scope="col">Incident</th>
                       <th scope="col">Incident Object</th>
+                      <th scope="col">Incident Date</th>
                       <!-- <th scope="col">Incident Object type</th> -->
                       <th scope="col">Date</th>
                       <!-- <th scope="col">Assign To</th> -->
@@ -32,8 +34,10 @@
                     <tr *ngFor=" let i = index let todoList of todoIncidentMasterList">
                       <td>{{i+1}}</td>
                       <td><b>{{todoList.incidentNumber}}</b></td>
+                      <td>{{todoList.incidentType}}</td>
                       <td>{{todoList.incident}}</td>
                       <td>{{todoList.incidentObject}}</td>
+                      <td>{{todoList.incidentDate}}</td>
                       <!-- <td><small>{{todoList.incidentObjectType}}</small></td> -->
                       <td>{{todoList.createdOn | date:'dd/MM/yyyy'}}</td>
                       <!-- <td><small>{{todoList.assignedUsername}}&nbsp;({{todoList.assignedName}})</small></td> -->
@@ -122,11 +126,18 @@
               </tr>
       
               <tr>
+                <td><b>Incident Type</b></td>
+                <td>{{viewToDoIncident.incidentType}}</td>
                 <td><b>Incident</b></td>
                 <td>{{viewToDoIncident.incident}}</td>
-                <td><b>Incident Object</b></td>
-                <td>{{viewToDoIncident.incidentObject}}</td>
-              </tr>
+                </tr>
+
+                <tr>
+                  <td><b>Incident Object</b></td>
+                  <td>{{viewToDoIncident.incidentObject}}</td>
+                  <td><b>Incident Date</b></td>
+                  <td>{{viewToDoIncident.incidentDate}}</td>
+                </tr>
               <tr>
                 <td><b>Incident Object Type</b></td>
                 <td>{{viewToDoIncident.incidentObjectType}}</td>

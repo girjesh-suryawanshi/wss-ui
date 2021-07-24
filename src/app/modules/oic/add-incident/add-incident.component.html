@@ -1,173 +1,173 @@
 <div class="card border-dark">
-    <div class="card-header text-center text-white">ADD INCIDENT </div>
-    <div class="card-body">
-        <form [formGroup]="incidentMasterForm" (ngSubmit)="onSubmitIncidentMasterForm()">
-            <div class="row">
+  <div class="card-header text-center text-white">ADD INCIDENT </div>
+  <div class="card-body">
+    <form [formGroup]="incidentMasterForm" (ngSubmit)="onSubmitIncidentMasterForm()">
+      <div class="row">
 
-              <div class="col-md-2 mb-4 mt-4">
-                <div>
-                    <select class="form-control" name="incidentList" formControlName="incident" required>
-                        <option value="" disabled>Select Incident Type</option>
-                        <option *ngFor="let incidentType of incidentTypeList" [ngValue]="incidentType"
-                            class="form-control form-control-sm">
-                            {{incidentType}}</option>
-                    </select>
-                </div>
-            </div>
-            
-                <div class="col-md-2 mb-4 mt-4">
-                    <div>
-                        <select class="form-control" name="incidentList" formControlName="incident" required>
-                            <option value="" disabled>Select Incident</option>
-                            <option *ngFor="let incident of incidentList" [ngValue]="incident"
-                                class="form-control form-control-sm">
-                                {{incident}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4 mt-4">
-                    <div>
-                        <select class="form-control" name="incidentObject" formControlName="incidentObject"
-                            (change)="onChangeIncidentObject()">
-                            <option value="" disabled>Select Incident Object</option>
-                            <option *ngFor="let incidentObject of incidentObjectList" [ngValue]="incidentObject"
-                                class="form-control form-control-sm">
-                                {{incidentObject}}</option>
-                        </select>
-                    </div>
-                </div>
+        <div class="col-md-2 mb-4 mt-4">
+          <div>
+            <select class="form-control" name="incidentType" formControlName="incidentType" required>
+              <option value="" disabled>Select Incident Type</option>
+              <option *ngFor="let incidentType of incidentTypeList" [ngValue]="incidentType"
+                class="form-control form-control-sm">
+                {{incidentType}}</option>
+            </select>
+          </div>
+        </div>
 
-                <div class="col-md-3 mb-4 mt-4">
-                  <div>
-                    <input placeholder="Incident Date" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
-                     <!-- <input type="date" class="form-control" placeholder="Incident Date"> -->
-                  </div>
-              </div>
+        <div class="col-md-2 mb-4 mt-4">
+          <div>
+            <select class="form-control" name="incidentList" formControlName="incident" required>
+              <option value="" disabled>Select Incident</option>
+              <option *ngFor="let incident of incidentList" [ngValue]="incident" class="form-control form-control-sm">
+                {{incident}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 mb-4 mt-4">
+          <div>
+            <select class="form-control" name="incidentObject" formControlName="incidentObject"
+              (change)="onChangeIncidentObject()">
+              <option value="" disabled>Select Incident Object</option>
+              <option *ngFor="let incidentObject of incidentObjectList" [ngValue]="incidentObject"
+                class="form-control form-control-sm">
+                {{incidentObject}}</option>
+            </select>
+          </div>
+        </div>
 
-                <div class="col-md-3 mb-4 mt-4" *ngIf="isHuman">
-                    <div>
-                        <select class="form-control" name="incidentObjectType" formControlName="incidentObjectType"
-                            (change)="onChangeIncidentObjectType()" required>
-                            <option value="" disabled>Select Incident Object Type</option>
-                            <option *ngFor="let incidentObjectType of incidentObjectTypeList"
-                                [ngValue]="incidentObjectType" class="form-control form-control-sm">
-                                {{incidentObjectType}}</option>
-                        </select>
-                    </div>
-                </div>
+        <div class="col-md-3 mb-4 mt-4">
+          <div>
+            <input placeholder="Incident Date" class="form-control" name="incidentDate" formControlName="incidentDate" type="text" required onfocus="(this.type='date')"
+              onblur="(this.type='text')" id="date" [max]="getToday()">
+            <!-- <input type="date" class="form-control" placeholder="Incident Date" [max]="getToday()"> -->
+          </div>
+        </div>
 
-                <div class="col-md-3 mb-4 mt-4" *ngIf="isDepartment">
-                    <div>
-                        <select class="form-control" name="employeeType" formControlName="employeeType" required>
-                            <option value="" disabled>Select Employee Type</option>
-                            <option *ngFor="let employeeType of employeeTypeList" [ngValue]="employeeType"
-                                class="form-control form-control-sm">
-                                {{employeeType}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-3 mb-4 mt-4" *ngIf="isHuman">
+          <div>
+            <select class="form-control" name="incidentObjectType" formControlName="incidentObjectType"
+              (change)="onChangeIncidentObjectType()" required>
+              <option value="" disabled>Select Incident Object Type</option>
+              <option *ngFor="let incidentObjectType of incidentObjectTypeList" [ngValue]="incidentObjectType"
+                class="form-control form-control-sm">
+                {{incidentObjectType}}</option>
+            </select>
+          </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-8 mb-2 mt-2">
-                    <div class="form-group">
-                        <!-- <label for="comment">Incident Description:</label> -->
-                        <textarea class="form-control" rows="4" placeholder="Enter the details of incident happened"
-                            id="comment" formControlName="incidentDescription" required></textarea>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-3 mb-4 mt-4" *ngIf="isDepartment">
+          <div>
+            <select class="form-control" name="employeeType" formControlName="employeeType" required>
+              <option value="" disabled>Select Employee Type</option>
+              <option *ngFor="let employeeType of employeeTypeList" [ngValue]="employeeType"
+                class="form-control form-control-sm">
+                {{employeeType}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8 mb-2 mt-2">
+          <div class="form-group">
+            <!-- <label for="comment">Incident Description:</label> -->
+            <textarea class="form-control" rows="4" placeholder="Enter the details of incident happened" id="comment"
+              formControlName="incidentDescription" required></textarea>
+          </div>
+        </div>
+      </div>
 
 
-            <div class="row d-flex justify-content-center">
+      <div class="row d-flex justify-content-center">
 
-              <div class="col-md-3 mb-2 mt-2 fileinfo">
-                <div class="form-group">
-                  <label for="template">**Download Sample Template</label>
-                </div>
-            </div>
+        <div class="col-md-3 mb-2 mt-2 fileinfo">
+          <div class="form-group">
+            <label for="template">**Download Sample Template</label>
+          </div>
+        </div>
 
-              <div class="col-md-3 mb-2 mt-2">
-                  <div>
-                    <select class="form-control" name="employeeType" formControlName="employeeType" required>
-                      <option value="" disabled>Select Sample Template</option>
-                      <option *ngFor="let template of fileTemplateNameList" [ngValue]="template"
-                          class="form-control form-control-sm">
-                          {{template.templateName}}</option>
-                  </select>
-                  </div>
-              </div>
-           
-              <div class="col-md-2 mb-2 mt-2">
-                <div >
-                  <button type="button" class="btn btn-info">Download</button>
-                </div>
-            </div>
+        <div class="col-md-3 mb-2 mt-2">
+          <div>
+            <select class="form-control" name="fileTemplate" formControlName="fileTemplate"
+              (change)="onChangeFileTemplate()">
+              <option value="" disabled>Select Sample Template</option>
+              <option *ngFor="let template of fileTemplateNameList" [ngValue]="template"
+                class="form-control form-control-sm">{{template.templateName}}</option>
+            </select>
+          </div>
+        </div>
 
+        <div class="col-md-2 mb-2 mt-2">
+          <div>
+            <button type="button" class="btn btn-info" (click)="onClickdownloadFileTemplate()">Download</button>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-8 mb-2 mt-2">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1"
+              (click)="isAttachmentClicked()">
+            <label class="form-check-label" for="exampleCheck1">Attachment</label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="incidentMasterForm.value.isAttachment">
+
+        <div class="fileinfo mb-3 mt-3">
+
+          <div>
+            <small class="mr-4">Maximum -> 5 file</small>
           </div>
 
-            
+          <div>
+            <small class="mr-4">Maximum file size -> 1 Mb</small>
+          </div>
+          <div>
+            <small>File type ->[ jpg, pdf ,doc ,xls ] only</small>
+          </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-8 mb-2 mt-2">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" formControlName="isAttachment" id="exampleCheck1"
-                      (click)="isAttachmentClicked()">
-                    <label class="form-check-label" for="exampleCheck1">Attachment</label>
-                  </div>
-                </div>
-              </div>
 
-              <div *ngIf="incidentMasterForm.value.isAttachment">
+        <div class="table">
+          <div class="mr-3"><label for="exampleFormControlFile1">Attatch File </label></div>
+          <div><input type="file" class="form-control-file" (change)="onFileChange($event)" formControlName="attachment"
+              accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></div>
+        </div>
 
-                <div class="fileinfo mb-3 mt-3">
-      
-                  <div>
-                    <small class="mr-4">Maximum -> 5 file</small>
-                  </div>
-      
-                  <div>
-                    <small class="mr-4">Maximum file size -> 1 Mb</small>
-                  </div>
-                  <div>
-                    <small>File type ->[ jpg, pdf ,doc ,xls ] only</small>
-                  </div>
-                </div>
-      
-      
-                <div class="table">
-                  <div class="mr-3"><label for="exampleFormControlFile1">Attatch File </label></div>
-                  <div><input type="file" class="form-control-file" (change)="onFileChange($event)"
-                      formControlName="attachment" accept="image/*,.pdf,.doc,.docx,.xml,.xls" multiple required></div>
-                </div>
-      
-                <div>
-                  <table class="table">
-                    <tbody>
-                      <tr *ngFor="let field of myFiles; let i = index">
-      
-                        <td>{{i+1}}</td>
-                        <td>
-                          {{field.name}}
-                        </td>
-                        <td>
-                          {{field.size/1000000 | number}}Mb
-                        </td>
-                        <td>
-                          <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
-                              class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
-                        </td>
-                      </tr>
-      
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+        <div>
+          <table class="table">
+            <tbody>
+              <tr *ngFor="let field of myFiles; let i = index">
 
-            <div class="button mt-4">
-                <button type="submit" [disabled]="!incidentMasterForm.valid" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
+                <td>{{i+1}}</td>
+                <td>
+                  {{field.name}}
+                </td>
+                <td>
+                  {{field.size/1000000 | number}}Mb
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm" type="button" (click)="deleteFieldValue(i)"><i
+                      class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+                </td>
+              </tr>
 
-    </div>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="button mt-4">
+        <button type="submit" [disabled]="!incidentMasterForm.valid" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+
+  </div>
 </div>

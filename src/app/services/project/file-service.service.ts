@@ -55,10 +55,26 @@ export class FileServiceService {
 
   getAllFileTemplateName() {
     console.log("getAllFileTemplateName");
-    return this.http.get(this.contextPath + '/template-files', { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + 'template-files', { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
   }
 
+  downloadFileTemplate(templateId: string, response) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append("templateId", templateId)
+     
+    let options : any = {
+      responseType: 'blob',
+      params: httpParams
+    }
+  
+    if (response) {
+      options["observe"] = 'response';
+    }
+  
+    return this.http.get(this.contextPath +"/template-files/downloadTemplateFile", options);
+  }
+  
 }

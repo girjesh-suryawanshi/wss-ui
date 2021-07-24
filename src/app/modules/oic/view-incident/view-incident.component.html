@@ -18,8 +18,10 @@
                     <tr>
                       <th scope="col">#</th>
                       <th scope="col">Incident No</th>
+                      <th scope="col">Incident Type</th>
                       <th scope="col">Incident</th>
                       <th scope="col">Incident Object</th>
+                      <th scope="col">Incident Date</th>
                       <!-- <th scope="col">Incident Object type</th> -->
                       <th scope="col">Date</th>
                       <th scope="col">Assign To</th>
@@ -32,8 +34,10 @@
                     <tr *ngFor=" let i = index let incidentMaster of incidentMasterList">
                       <td>{{i+1}}</td>
                       <td><b>{{incidentMaster.incidentNumber}}</b></td>
+                      <td>{{incidentMaster.incidentType}}</td>
                       <td>{{incidentMaster.incident}}</td>
                       <td>{{incidentMaster.incidentObject}}</td>
+                      <td>{{incidentMaster.incidentDate}}</td>
                       <!-- <td><small>{{incidentMaster.incidentObjectType}}</small></td> -->
                       <td>{{incidentMaster.createdOn | date:'dd/MM/yyyy'}}</td>
                       <td>{{incidentMaster.assignedUsername}}&nbsp;({{incidentMaster.assignedName}})</td>
@@ -130,11 +134,18 @@
               </tr>
       
               <tr>
+                <td><b>Incident Type</b></td>
+                <td>{{viewIncident.incidentType}}</td>
                 <td><b>Incident</b></td>
                 <td>{{viewIncident.incident}}</td>
-                <td><b>Incident Object</b></td>
+                </tr>
+                <tr>
+                  <td><b>Incident Object</b></td>
                 <td>{{viewIncident.incidentObject}}</td>
-              </tr>
+                <td><b>Incident Date</b></td>
+                <td>{{viewIncident.incidentDate}}</td>
+                </tr>
+
               <tr>
                 <td><b>Incident Object Type</b></td>
                 <td>{{viewIncident.incidentObjectType}}</td>

@@ -42,6 +42,7 @@ export class ToDoIncidentComponent implements OnInit {
   requestInfoList: any=[];
   isProcessing: boolean;
   isDisable: boolean;
+  currentDate: Date;
 
   constructor(private authorizationService: AuthorizationService, 
       private globalutilityService: GobalutilityService, 
@@ -78,8 +79,11 @@ export class ToDoIncidentComponent implements OnInit {
       lengthMenu : [10, 25, 50],
       processing: true
     };
+
    
   }
+
+ 
 
   getToDoIncidentByUseranme(username: string) {
     this.todoIncidentMasterService.getToDoIncidentByAssignUsername(username).subscribe(success => {

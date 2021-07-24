@@ -6,6 +6,7 @@ import { AuthorizationService } from 'src/app/services/authorization-service/aut
 import { User } from 'src/app/models/user.model';
 import { IncidentMasterService } from 'src/app/services/project/incident-master.service'
 import { FileServiceService } from 'src/app/services/project/file-service.service';
+import { GlobalConstants } from 'src/app/utility/global.constants';
 
 @Component({
   selector: 'app-add-incident',
@@ -42,6 +43,9 @@ export class AddIncidentComponent implements OnInit {
   officeType: string;
   incidentNumber: any;
   fileTemplateNameList: any;
+  templateId: any;
+  templateName: any;
+  originalTemplateName: any;
 
 
 
@@ -53,11 +57,14 @@ export class AddIncidentComponent implements OnInit {
   ngOnInit(){
 
     this.incidentMasterForm = new FormGroup({
+      incidentType: new FormControl('', Validators.required),
       incident: new FormControl('', Validators.required),
       incidentObject: new FormControl('', Validators.required),
       incidentObjectType: new FormControl('', Validators.required),
       employeeType: new FormControl('', Validators.required),
       incidentDescription : new FormControl('', Validators.required),
+      incidentDate : new FormControl('', Validators.required),
+      fileTemplate:new FormControl(false),
       isAttachment:new FormControl(false)
     });
 
@@ -69,15 +76,47 @@ export class AddIncidentComponent implements OnInit {
     this.locationName = this.loggedInUser.getLocationShortName();
     this.officeType = this.loggedInUser.getOfficeType();
     this.getAllFileTemplate();
+    this.resetTemplateFileDownloader();
   }
+
+  getToday(): string {
+    return new Date().toISOString().split('T')[0]
+ }
+
+  removeValidator() {
+    this.incidentMasterForm.removeControl('fileTemplate'); 
+  }
+
+  onChangeFileTemplate(){
+   console.log("OnChange File Template");  
+   console.log(this.incidentMasterForm.value.fileTemplate.originalTemplateName);
+   this.templateId= this.incidentMasterForm.value.fileTemplate.templateId;
+   this.originalTemplateName= this.incidentMasterForm.value.fileTemplate.originalTemplateName;
+   }
+
+
+  onClickdownloadFileTemplate(){
+     console.log("download file template Clicked");
+     console.log(this.originalTemplateName);
+       this.templateFileService.downloadFileTemplate(this.templateId, GlobalConstants.FALSE).subscribe(success => {
+        this.saveFile(success, this.originalTemplateName);
+        this.resetTemplateFileDownloader();
+      }, error => {
+        this.handleError(error);
+        this.resetTemplateFileDownloader();
+      })    
+
+  }
+
+
+/**This method is used to feched All file template from  database */
+
   getAllFileTemplate() {
   
     this.templateFileService.getAllFileTemplateName().subscribe(succes => {
       this.fileTemplateNameList = succes.body;
       console.log("Getting template file");
       console.log(this.fileTemplateNameList);
-      
-      
     }, error => {
       console.log("error");
       console.log(error);
@@ -198,10 +237,22 @@ export class AddIncidentComponent implements OnInit {
 
     });
   }
+
+  resetTemplateFileDownloader() {
+    this.incidentMasterForm.patchValue({
+      fileTemplate: ''
+
+    });
+  }
  
 
   onSubmitIncidentMasterForm() {
     
+    console.log("Onsubmit incident master");
+    console.log(this.incidentMasterForm.value);
+    
+    
+
       this.isProcessing = true;
   
       this.preparedIssueMasterObject();
@@ -230,6 +281,8 @@ export class AddIncidentComponent implements OnInit {
   
     private preparedIssueMasterObject() {
       this.incidentMasterModal = new IncidentMaster();
+      this.incidentMasterModal.setIncidentType(this.incidentMasterForm.value.incidentType);
+      this.incidentMasterModal.setIncidentDate(this.incidentMasterForm.value.incidentDate);
       this.incidentMasterModal.setUsername(this.username);
       this.incidentMasterModal.setName(this.name);
       this.incidentMasterModal.setLocationCode(this.locationCode);
@@ -247,6 +300,8 @@ export class AddIncidentComponent implements OnInit {
     resetIncidentMasterForm() {
       this.myFiles = [];
       this.incidentMasterForm.patchValue({
+        incidentType:'',
+        incidentDate:'',
         incident: '',
         incidentObject: '',
         incidentObjectType: '',
@@ -257,6 +312,31 @@ export class AddIncidentComponent implements OnInit {
       });
   
     }
+
+
+    /**
+   * Save blob to file
+   * @param blob
+   */
+   saveFile(success: any, fileName: string) {
+    if (success) {
+      // this.exportType ="pdf"
+      let blob = GobalutilityService.createBlobFromResponse(success);
+      this.globalutilityService.saveFile(blob, fileName);
+      // this.reset();
+    }
+  }
+
+  /**
+   * Handle errors
+   * @param error
+   */
+  handleError(error: any) {
+    this.globalutilityService.parseStringFromBlob(error.error);
+    // this.reset();
+    this.globalutilityService.errorAlertMessage("Unable to download file.");
+  }
+
   
 
 }
