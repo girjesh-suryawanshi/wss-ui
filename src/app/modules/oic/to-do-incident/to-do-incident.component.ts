@@ -43,6 +43,7 @@ export class ToDoIncidentComponent implements OnInit {
   isProcessing: boolean;
   isDisable: boolean;
   currentDate: Date;
+  role :any;
 
   constructor(private authorizationService: AuthorizationService, 
       private globalutilityService: GobalutilityService, 
@@ -57,6 +58,7 @@ export class ToDoIncidentComponent implements OnInit {
     this.username = this.loggedInUser.getUsername();
     this.locationCode = this.loggedInUser.getLocationCode();
     this.name = this.loggedInUser.getName();
+    this.role = this.loggedInUser.getRole();
     this.getToDoIncidentByUseranme(this.username);
 
     this.requestInfoForm = new FormGroup({
@@ -111,9 +113,13 @@ export class ToDoIncidentComponent implements OnInit {
   public onClickView(ps: any) {
     console.log("Checking Status");
     console.log(ps.status)  
-    if (ps.status === 'SUBMITTED') {
+    if (this.role === GlobalConstants.LOGGED_IN_USER_ROLE_ADMIN_DE && ps.status === GlobalConstants.INCIDENT_STATUS) {
       this.isDisable = false;
-    } else {
+    } else if(this.role === GlobalConstants.LOGGED_IN_USER_ROLE_ADMIN_SE && ps.status ===GlobalConstants.INCIDENT_STATUS_APPROVED_DE){
+      this.isDisable = false;
+    }else if(this.role === GlobalConstants.LOGGED_IN_USER_ROLE_ADMIN_CE && ps.status ===GlobalConstants.INCIDENT_STATUS_APPROVED_SE){
+      this.isDisable = false;
+    }else{
       this.isDisable = true;
     }
     

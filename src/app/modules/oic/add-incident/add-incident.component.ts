@@ -46,6 +46,7 @@ export class AddIncidentComponent implements OnInit {
   templateId: any;
   templateName: any;
   originalTemplateName: any;
+  isTemplate:boolean;
 
 
 
@@ -86,10 +87,11 @@ export class AddIncidentComponent implements OnInit {
   removeValidator() {
     this.incidentMasterForm.removeControl('fileTemplate'); 
   }
-
+  
   onChangeFileTemplate(){
-   console.log("OnChange File Template");  
+   console.log("OnChange File Template Get Template Value");  
    console.log(this.incidentMasterForm.value.fileTemplate.originalTemplateName);
+   this.isTemplate =true;
    this.templateId= this.incidentMasterForm.value.fileTemplate.templateId;
    this.originalTemplateName= this.incidentMasterForm.value.fileTemplate.originalTemplateName;
    }
@@ -100,9 +102,11 @@ export class AddIncidentComponent implements OnInit {
      console.log(this.originalTemplateName);
        this.templateFileService.downloadFileTemplate(this.templateId, GlobalConstants.FALSE).subscribe(success => {
         this.saveFile(success, this.originalTemplateName);
+        this.isTemplate =false;
         this.resetTemplateFileDownloader();
       }, error => {
         this.handleError(error);
+        this.isTemplate =false;
         this.resetTemplateFileDownloader();
       })    
 

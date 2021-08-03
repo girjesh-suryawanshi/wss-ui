@@ -42,11 +42,19 @@
                       <td>{{incidentMaster.createdOn | date:'dd/MM/yyyy'}}</td>
                       <td>{{incidentMaster.assignedUsername}}&nbsp;({{incidentMaster.assignedName}})</td>
                       <td>
-                        <span *ngIf="incidentMaster.status==='SUBMITTED'" class="badge badge-success rounded-0 p-1">{{incidentMaster.status}}</span>
+                        <span *ngIf="incidentMaster.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{incidentMaster.status}}</span>
+                        <!-- <span *ngIf="incidentMaster.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{incidentMaster.status}}</span> -->
                         
-                        <span *ngIf="incidentMaster.status==='APPROVED'" class="badge badge-primary rounded-0 p-1">{{incidentMaster.status}}</span>
+                        <span *ngIf="incidentMaster.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{incidentMaster.status}}</span>
 
-                        <span *ngIf="incidentMaster.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{incidentMaster.status}}</span> </td>
+                        <span *ngIf="incidentMaster.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{incidentMaster.status}}</span>
+
+                        <span *ngIf="incidentMaster.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{incidentMaster.status}}</span>
+
+                        <span *ngIf="(incidentMaster.status==='REJECTED_DE'||incidentMaster.status==='REJECTED_SE'||incidentMaster.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{incidentMaster.status}}</span>
+                        
+                        <!-- <span *ngIf="incidentMaster.status==='REJECTED_CE'" class="badge badge-danger rounded-0 p-1">{{incidentMaster.status}}</span> -->
+                      </td>
                       <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(incidentMaster)">View</button></td>
                       <!-- <td></td> -->
                     </tr>
@@ -97,17 +105,12 @@
                 <td><b>Incident Number</b></td>
                 <td><span class="badge badge-warning rounded-0 p-1">{{viewIncident.incidentNumber}}</span></td>
                 <td><b>Status</b></td>
-                <td><span *ngIf="viewIncident.status==='SUBMITTED'"
-                    class="badge badge-success rounded-0 p-1">{{viewIncident.status}}</span>
-                    <span
-                    *ngIf="viewIncident.status==='PENDING'"
-                    class="badge badge-danger rounded-0 p-1">{{viewIncident.status}}</span>
-                    <span
-                    *ngIf="viewIncident.status==='FORWARDED'"
-                    class="badge badge-primary rounded-0 p-1">{{viewIncident.status}}</span>
-                    <span
-                    *ngIf="viewIncident.status==='REJECTED'"
-                    class="badge badge-warning rounded-0 p-1">{{viewIncident.status}}</span>
+                <td>
+                  <span *ngIf="viewIncident.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{viewIncident.status}}</span>
+                    <span *ngIf="viewIncident.status==='APPROVED_SE'"  class="badge badge-primary rounded-0 p-1">{{viewIncident.status}}</span>
+                    <span *ngIf="viewIncident.status==='APPROVED_SE'"class="badge badge-success rounded-0 p-1">{{viewIncident.status}}</span>
+                    <span *ngIf="(viewIncident.status==='REJECTED_DE'||viewIncident.status==='REJECTED_SE'||viewIncident.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{viewIncident.status}}</span>
+                    <span *ngIf="viewIncident.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{viewIncident.status}}</span>
       
                   </td>
               </tr>
@@ -220,9 +223,11 @@
            <tr *ngFor="let status of incidentStatusList let i = index">
              <td><small>{{i+1}}</small></td>
              <td><small><b>{{status.incidentNumber}}</b></small></td>
-             <td><span *ngIf="status.status==='SUBMITTED'" class="badge badge-success rounded-0 p-1">{{status.status}}</span>
-             <span *ngIf="status.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
-             <span *ngIf="status.status==='PENDING'"  class="badge badge-danger rounded-0 p-1">{{status.status}}</span>
+             <td><span *ngIf="status.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="(status.status==='REJECTED_DE'||status.status==='REJECTED_SE'||status.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='APPROVED_DE'"  class="badge badge-info rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='APPROVED_CE'"  class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='APPROVED_SE'"  class="badge badge-primary rounded-0 p-1">{{status.status}}</span>
                <span *ngIf="status.status==='FORWARDED'"  class="badge badge-primary rounded-0 p-1">{{status.status}}</span></td>
              <td><small>{{status.userComments}}</small></td>
              <td><small>{{status.username}}({{status.name}})</small></td>

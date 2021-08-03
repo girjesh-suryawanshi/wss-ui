@@ -41,11 +41,15 @@
                       <!-- <td><small>{{todoList.incidentObjectType}}</small></td> -->
                       <td>{{todoList.createdOn | date:'dd/MM/yyyy'}}</td>
                       <!-- <td><small>{{todoList.assignedUsername}}&nbsp;({{todoList.assignedName}})</small></td> -->
-                      <td> <span *ngIf="todoList.status==='SUBMITTED'" class="badge badge-success rounded-0 p-1">{{todoList.status}}</span>
+                      <td> <span *ngIf="todoList.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{todoList.status}}</span>
                         
-                        <span *ngIf="todoList.status==='APPROVED'" class="badge badge-primary rounded-0 p-1">{{todoList.status}}</span>
+                        <span *ngIf="todoList.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{todoList.status}}</span>
 
-                        <span *ngIf="todoList.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{todoList.status}}</span></td>
+                        <span *ngIf="(todoList.status==='REJECTED_DE'||todoList.status==='REJECTED_SE'||todoList.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{todoList.status}}</span>
+
+                        <span *ngIf="todoList.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{todoList.status}}</span>
+
+                        <span *ngIf="todoList.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{todoList.status}}</span></td>
 
                       <td><button type="button" class="btn btn-outline-info btn-sm" (click)="onClickView(todoList)">View</button></td>
                       <!-- <td></td> -->
@@ -88,17 +92,13 @@
                 <td><b>Incident Number</b></td>
                 <td><span class="badge badge-warning rounded-0 p-1">{{viewToDoIncident.incidentNumber}}</span></td>
                 <td><b>Status</b></td>
-                <td><span *ngIf="viewToDoIncident.status==='SUBMITTED'"
-                    class="badge badge-success rounded-0 p-1">{{viewToDoIncident.status}}</span>
-                    <span
-                    *ngIf="viewToDoIncident.status==='PENDING'"
-                    class="badge badge-danger rounded-0 p-1">{{viewToDoIncident.status}}</span>
-                    <span
-                    *ngIf="viewToDoIncident.status==='FORWARDED'"
-                    class="badge badge-primary rounded-0 p-1">{{viewToDoIncident.status}}</span>
-                    <span
-                    *ngIf="viewToDoIncident.status==='REJECTED'"
-                    class="badge badge-warning rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                <td>
+                  <span *ngIf="viewToDoIncident.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="viewToDoIncident.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="viewToDoIncident.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="viewToDoIncident.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="viewToDoIncident.status==='FORWARDED'"  class="badge badge-primary rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="(viewToDoIncident.status==='REJECTED_DE'||viewToDoIncident.status==='REJECTED_SE'||viewToDoIncident.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{viewToDoIncident.status}}</span>
       
                   </td>
               </tr>
@@ -209,11 +209,17 @@
          <tr *ngFor="let status of incidentStatusList let i = index">
            <td><small>{{i+1}}</small></td>
            <td><small><b>{{status.incidentNumber}}</b></small></td>
-           <td> <span *ngIf="status.status==='SUBMITTED'" class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+           <td>
+             <span *ngIf="status.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
                         
-            <span *ngIf="status.status==='APPROVED'" class="badge badge-primary rounded-0 p-1">{{status.status}}</span>
+            <span *ngIf="status.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{status.status}}</span>
 
-            <span *ngIf="status.status==='REJECTED'" class="badge badge-warning rounded-0 p-1">{{status.status}}</span></td>
+            <span *ngIf="status.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{status.status}}</span>
+
+            <span *ngIf="status.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+
+            <span *ngIf="(status.status==='REJECTED_DE'||status.status==='REJECTED_SE'||status.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{status.status}}</span></td>
+
              <td><small>{{status.userComments}}</small></td>
            <td><small>{{status.username}}({{status.name}})</small></td>
            <td><small>{{status.createdOn | date:'medium'}}</small></td>            
