@@ -20,9 +20,13 @@ export class GlobalConstants {
 
     public static readonly LOGGED_IN_USER_ROLE_ADMIN_CE : string ="ADMIN_CE";
 
+    public static readonly LOGGED_IN_USER_ROLE_ADMIN_MD : string ="ADMIN_MD";
+
     public static readonly INCIDENT_STATUS_APPROVED_DE : string ="APPROVED_DE";
 
     public static readonly INCIDENT_STATUS_APPROVED_SE : string ="APPROVED_SE";
+
+    public static readonly INCIDENT_STATUS_APPROVED_CE : string ="APPROVED_CE";
 
     public static readonly INCIDENT_STATUS : string ="SUBMITTED";
     

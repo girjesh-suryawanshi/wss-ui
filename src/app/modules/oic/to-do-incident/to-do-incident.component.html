@@ -43,9 +43,11 @@
                       <!-- <td><small>{{todoList.assignedUsername}}&nbsp;({{todoList.assignedName}})</small></td> -->
                       <td> <span *ngIf="todoList.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{todoList.status}}</span>
                         
-                        <span *ngIf="todoList.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{todoList.status}}</span>
+                        <span *ngIf="todoList.status==='APPROVED_CE'" class="badge badge-dark rounded-0 p-1">{{todoList.status}}</span>
 
-                        <span *ngIf="(todoList.status==='REJECTED_DE'||todoList.status==='REJECTED_SE'||todoList.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{todoList.status}}</span>
+                        <span *ngIf="todoList.status==='CLOSED'" class="badge badge-success rounded-0 p-1">{{todoList.status}}</span>
+
+                        <span *ngIf="(todoList.status==='REJECTED_DE'||todoList.status==='REJECTED_SE'||todoList.status==='REJECTED_CE' || todoList.status==='REJECTED_MD')" class="badge badge-danger rounded-0 p-1">{{todoList.status}}</span>
 
                         <span *ngIf="todoList.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{todoList.status}}</span>
 
@@ -96,9 +98,10 @@
                   <span *ngIf="viewToDoIncident.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{viewToDoIncident.status}}</span>
                     <span  *ngIf="viewToDoIncident.status==='APPROVED_DE'" class="badge badge-info rounded-0 p-1">{{viewToDoIncident.status}}</span>
                     <span  *ngIf="viewToDoIncident.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{viewToDoIncident.status}}</span>
-                    <span  *ngIf="viewToDoIncident.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="viewToDoIncident.status==='APPROVED_CE'" class="badge badge-dark rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="viewToDoIncident.status==='CLOSED'" class="badge badge-success rounded-0 p-1">{{viewToDoIncident.status}}</span>
                     <span  *ngIf="viewToDoIncident.status==='FORWARDED'"  class="badge badge-primary rounded-0 p-1">{{viewToDoIncident.status}}</span>
-                    <span  *ngIf="(viewToDoIncident.status==='REJECTED_DE'||viewToDoIncident.status==='REJECTED_SE'||viewToDoIncident.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{viewToDoIncident.status}}</span>
+                    <span  *ngIf="(viewToDoIncident.status==='REJECTED_DE'||viewToDoIncident.status==='REJECTED_SE'||viewToDoIncident.status==='REJECTED_CE' || viewToDoIncident.status==='REJECTED_MD')" class="badge badge-danger rounded-0 p-1">{{viewToDoIncident.status}}</span>
       
                   </td>
               </tr>
@@ -216,9 +219,11 @@
 
             <span *ngIf="status.status==='APPROVED_SE'" class="badge badge-primary rounded-0 p-1">{{status.status}}</span>
 
-            <span *ngIf="status.status==='APPROVED_CE'" class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+            <span *ngIf="status.status==='APPROVED_CE'" class="badge badge-dark rounded-0 p-1">{{status.status}}</span>
 
-            <span *ngIf="(status.status==='REJECTED_DE'||status.status==='REJECTED_SE'||status.status==='REJECTED_CE')" class="badge badge-danger rounded-0 p-1">{{status.status}}</span></td>
+            <span *ngIf="status.status==='CLOSED'" class="badge badge-success rounded-0 p-1">{{status.status}}</span>
+
+            <span *ngIf="(status.status==='REJECTED_DE'||status.status==='REJECTED_SE'||status.status==='REJECTED_CE' || status.status==='REJECTED_MD')" class="badge badge-danger rounded-0 p-1">{{status.status}}</span></td>
 
              <td><small>{{status.userComments}}</small></td>
            <td><small>{{status.username}}({{status.name}})</small></td>

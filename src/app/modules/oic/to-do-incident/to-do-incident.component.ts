@@ -119,7 +119,11 @@ export class ToDoIncidentComponent implements OnInit {
       this.isDisable = false;
     }else if(this.role === GlobalConstants.LOGGED_IN_USER_ROLE_ADMIN_CE && ps.status ===GlobalConstants.INCIDENT_STATUS_APPROVED_SE){
       this.isDisable = false;
-    }else{
+    }
+    else if(this.role === GlobalConstants.LOGGED_IN_USER_ROLE_ADMIN_MD && ps.status ===GlobalConstants.INCIDENT_STATUS_APPROVED_CE){
+      this.isDisable = false;
+    }
+    else{
       this.isDisable = true;
     }
     
