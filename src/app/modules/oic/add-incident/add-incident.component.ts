@@ -127,9 +127,6 @@ export class AddIncidentComponent implements OnInit {
     });
   }
   
- 
-
-
 
   onChangeIncidentObject() {
     this.resetincidentMasterForm();

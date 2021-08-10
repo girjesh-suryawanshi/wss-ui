@@ -38,4 +38,15 @@ export class UserService {
       return response;
     }));
   }
+
+  public updatePassword(user, response: boolean) {
+    let options = null;
+    if (response) {
+      options = { observe: 'response' };
+      return this.http.put(this.contextPath + '/users', user, options);
+    } else {
+      return this.http.put(this.contextPath + '/users', user);
+    }
+  }
+
 }
