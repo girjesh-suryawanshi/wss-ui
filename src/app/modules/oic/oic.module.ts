@@ -35,8 +35,6 @@ import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component
     ReactiveFormsModule,
     LoginModalModule,
     DataTablesModule
-    // SessionTimerModule,
-    // NavBarModule
   ]
 })
 export class OicModule { }

@@ -9,7 +9,7 @@ import { AddIncidentComponent } from './add-incident/add-incident.component';
 import { ViewIncidentComponent } from './view-incident/view-incident.component';
 import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component';
 import { TrackIncidentComponent } from './track-incident/track-incident.component';
-import { AddIssueComponent } from './add-issue/add-issue.component';
+import { ChangePasswordComponent } from '../user/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -58,6 +58,12 @@ const routes: Routes = [
             path:'to-do-incident',
             component:ToDoIncidentComponent
           },
+           
+          {
+            path:'change-password',
+            component:ChangePasswordComponent
+          },
+
           {
             path: '', redirectTo: 'home', pathMatch: 'full'
           }
