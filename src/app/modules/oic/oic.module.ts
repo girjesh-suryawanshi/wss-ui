@@ -31,7 +31,6 @@ import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component
     OicRoutingModule,
     FormsModule,
     HttpClientModule,
-    FormsModule,
     ReactiveFormsModule,
     LoginModalModule,
     DataTablesModule

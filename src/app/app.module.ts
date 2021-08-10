@@ -12,8 +12,8 @@ import { AuthorizationInterceptor } from '../app/interceptor/authorization.inter
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthGuard} from 'src/app/guard/auth.guard'
 import {GlobalConstants} from 'src/app/utility/global.constants';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { UserModule } from './modules/user/user.module'
 
 
 
@@ -27,8 +27,7 @@ import { DatePipe } from '@angular/common'
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
-    
+    UserModule
     
      ],
   providers: [

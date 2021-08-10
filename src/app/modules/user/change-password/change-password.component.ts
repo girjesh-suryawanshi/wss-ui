@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
+import { GobalutilityService } from 'src/app/utility/gobalutility.service';
 
 
 @Component({
@@ -10,17 +11,45 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  constructor() { }
-
-  incidentMasterForm: FormGroup;
+  changePasswordform: FormGroup = new FormGroup({});
+  
+  constructor(private fb: FormBuilder) {
+  
+    this.changePasswordform = fb.group({
+      password: ['', [Validators.required]],
+      confirm_password: ['', [Validators.required]]
+    }, { 
+      validator: this.ConfirmedValidator('password', 'confirm_password')
+    })
+  }
 
   ngOnInit(): void {
-
    
   }
-
-  onSubmitIncidentMasterForm(){
-
+    
+  get f(){
+    return this.changePasswordform.controls;
+  }
+   
+  onSubmitChangePassword(){
+    console.log("Getting Change Password Value");
+    
+    console.log(this.changePasswordform.value);
   }
 
+  ConfirmedValidator(controlName: string, matchingControlName: string){
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        const matchingControl = formGroup.controls[matchingControlName];
+        if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
+            return;
+        }
+        if (control.value !== matchingControl.value) {
+            matchingControl.setErrors({ confirmedValidator: true });
+        } else {
+            matchingControl.setErrors(null);
+        }
+    }
+
+  }
 }
