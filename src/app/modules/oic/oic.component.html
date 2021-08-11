@@ -101,7 +101,7 @@
        
 
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="(role==='ADMIN_DE'||role==='ADMIN_SE'||role==='ADMIN_CE' || role==='ADMIN_MD'|| role==='ADMIN_OIC')">
           <a class="nav-link" [routerLink]="['to-do-incident']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
             <i class="nav-icon fas fa-tasks"></i>
             <p>
@@ -135,6 +135,15 @@
             <i class="nav-icon fas fa-eye"></i>
             <p>
               View Incident
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['track-incident']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+            <i class="nav-icon fas fa-search"></i>
+            <p>
+              Search Incident
             </p>
           </a>
         </li>
@@ -253,6 +262,23 @@
           <p class="text-white">
             Change Password
          </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-password']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+          <i class="nav-icon fas fa-mobile fa-lg text-white"></i>
+          <p class="text-white">
+            Change Mobile No
+         </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-password']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
+          <i class="nav-icon fas fa-search-location fa-lg text-white"></i>
+          <p class="text-white">
+            Change Location         </p>
         </a>
       </li>
 

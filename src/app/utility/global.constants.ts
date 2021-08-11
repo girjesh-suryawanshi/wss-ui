@@ -22,6 +22,8 @@ export class GlobalConstants {
 
     public static readonly LOGGED_IN_USER_ROLE_ADMIN_MD : string ="ADMIN_MD";
 
+    public static readonly LOGGED_IN_USER_ROLE_ADMIN_OIC : string ="OIC";
+
     public static readonly INCIDENT_STATUS_APPROVED_DE : string ="APPROVED_DE";
 
     public static readonly INCIDENT_STATUS_APPROVED_SE : string ="APPROVED_SE";

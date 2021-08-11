@@ -1,1 +1,24 @@
-<p>track-incident works!</p>
+<div class="card border-dark">
+  <div class="card-header text-center text-white">SEARCH INCIDENT</div>
+  <div class="card-body">
+
+    <form [formGroup]="incidentSearchFrom" (ngSubmit)="searchClicked()">
+      <div class="form-group form-inline d-flex justify-content-center">
+        <div class="mx-sm-3">
+          <input type="text" class="form-control form-control-sm" id="incidentNumber" formControlName="incidentNumber"
+            name="incidentNumber" placeholder="Enter Incident number" autocomplete="off">
+        </div>
+        <div>
+          <button type="submit" [disabled]="incidentSearchFrom.invalid" class="btn btn-sm btn-primary" id="search"  name="search">Search</button>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="isProcessing">
+      <div class="form-group d-flex justify-content-center">
+        <label class="font-weight-bold">Processing....</label>
+        <div class="spinner-border text-info"></div>
+      </div>
+    </div>
+  </div>
+</div>
