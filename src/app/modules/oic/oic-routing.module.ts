@@ -10,6 +10,10 @@ import { ViewIncidentComponent } from './view-incident/view-incident.component';
 import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component';
 import { TrackIncidentComponent } from './track-incident/track-incident.component';
 import { ChangePasswordComponent } from '../user/change-password/change-password.component';
+import { ResetPasswordComponent } from '../user/reset-password/reset-password.component';
+import { ChangeLocatonComponent } from '../user/change-locaton/change-locaton.component';
+import { ChangeMobileNumberComponent } from '../user/change-mobile-number/change-mobile-number.component';
+import { SearchIncidentComponent } from './search-incident/search-incident.component';
 
 const routes: Routes = [
   {
@@ -58,10 +62,29 @@ const routes: Routes = [
             path:'to-do-incident',
             component:ToDoIncidentComponent
           },
+
+          {
+            path:'search-incident',
+            component:SearchIncidentComponent
+          },
            
           {
             path:'change-password',
             component:ChangePasswordComponent
+          },
+          {
+            path:'reset-password',
+            component:ResetPasswordComponent
+
+          },
+          {
+            path:'change-mobile',
+            component: ChangeMobileNumberComponent
+          },
+
+          {
+            path:'change-location',
+            component: ChangeLocatonComponent
           },
 
           {

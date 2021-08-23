@@ -1,0 +1,202 @@
+<div class="card border-dark">
+    <div class="card-header text-center text-white">SEARCH INCIDENT</div>
+    <div class="card-body">
+
+        <form [formGroup]="incidentSearchFrom" (ngSubmit)="searchClicked()">
+            <div class="form-group form-inline d-flex justify-content-center">
+                <div class="mx-sm-3">
+                    <input type="text" class="form-control form-control-sm" id="incidentNumber"
+                        formControlName="incidentNumber" name="incidentNumber" placeholder="Enter Incident Number"
+                        autocomplete="off">
+                </div>
+                <div>
+                    <button type="submit" [disabled]="incidentSearchFrom.invalid" class="btn btn-sm btn-dark"
+                        id="search" name="search">Search</button>
+                </div>
+            </div>
+        </form>
+        <div *ngIf="isProcessing">
+            <div class="form-group d-flex justify-content-center">
+                <label class="font-weight-bold">Processing....</label>
+                <div class="spinner-border text-info"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" *ngIf="isSearch">
+    <div class="card-header">
+        <div id="titleDiv">
+            <h3 class="card-title text-white text-center">INCIDENT DETAILS</h3>
+        </div>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <!-- <button
+          type="button"
+          class="btn btn-tool"
+          data-card-widget="remove"
+        >
+          <i class="fas fa-times"></i>
+        </button> -->
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div>
+            <div class="table-responsive-md">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td><b>Incident Number</b></td>
+                            <td><span class="badge badge-warning rounded-0 p-1">{{statusList.incidentNumber}}</span>
+                            </td>
+                            <td><b>Status</b></td>
+                            <td>
+                                <span *ngIf="statusList.status==='SUBMITTED'"
+                                    class="badge badge-warning rounded-0 p-1">{{statusList.status}}</span>
+                                <span *ngIf="statusList.status==='APPROVED_SE'"
+                                    class="badge badge-primary rounded-0 p-1">{{statusList.status}}</span>
+                                <span *ngIf="statusList.status==='APPROVED_CE'"
+                                    class="badge badge-dark rounded-0 p-1">{{statusList.status}}</span>
+                                <span *ngIf="statusList.status==='CLOSED'"
+                                    class="badge badge-success rounded-0 p-1">{{statusList.status}}</span>
+                                <span
+                                    *ngIf="(statusList.status==='REJECTED_DE'||statusList.status==='REJECTED_SE'||statusList.status==='REJECTED_CE' || statusList.status==='REJECTED_MD')"
+                                    class="badge badge-danger rounded-0 p-1">{{statusList.status}}</span>
+                                <span *ngIf="statusList.status==='APPROVED_DE'"
+                                    class="badge badge-info rounded-0 p-1">{{statusList.status}}</span>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Created By</b></td>
+                            <td>{{statusList.username}} ( {{statusList.name}} )</td>
+                            <td><b>Created On</b></td>
+                            <td>{{statusList.createdOn | date:'medium' }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Location code</b></td>
+                            <td>{{statusList.locationCode}}</td>
+                            <td><b>Location Name</b></td>
+                            <td>{{statusList.locationName}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Moblile No</b></td>
+                            <td>{{statusList.mobileNumber}}</td>
+                            <td><b>Employee Type</b></td>
+                            <td>{{statusList.employeeType}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Incident Type</b></td>
+                            <td>{{statusList.incidentType}}</td>
+                            <td><b>Incident</b></td>
+                            <td>{{statusList.incident}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Incident Object</b></td>
+                            <td>{{statusList.incidentObject}}</td>
+                            <td><b>Incident Date</b></td>
+                            <td>{{statusList.incidentDate}}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Incident Object Type</b></td>
+                            <td>{{statusList.incidentObjectType}}</td>
+                            <td><b>Description</b></td>
+                            <td>{{statusList.incidentDescription}}</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <table class="table table-responsive-md" *ngIf="files && files.length>0">
+                    <thead class="thead-dark text-center">
+                        <th colspan="5">
+                            <h5>ATTACHED FILES</h5>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th>File name</th>
+                            <th>Remark</th>
+                            <th>Date</th>
+                            <th>Action</th>
+
+                        </tr>
+                        <tr *ngFor="let file of files let i = index">
+                            <td>{{i+1}}</td>
+                            <td><small>{{file.originalName}}</small></td>
+                            <td><small>{{file.remark}}</small></td>
+                            <td><small>{{file.createdOn | date:'medium' }}</small></td>
+                            <td><button class="btn btn-info btn-sm" (click)="viewFileClicked(file)"><i
+                                        class="fa fa-download fa-lg" aria-hidden="true"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- /.card-pane-right -->
+        </div>
+        <!-- /.d-md-flex -->
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<div class="card" *ngIf="isSearch">
+    <div class="card-header">
+      <div id="titleDiv"> <h3 class="card-title text-white">INCIDENT CURRENT STATUS</h3></div>
+       <div class="card-tools">
+       <button
+         type="button"
+         class="btn btn-tool"
+         data-card-widget="collapse">
+         <i class="fas fa-minus"></i>
+       </button>
+         </div>
+   </div>
+   <!-- /.card-header -->
+   <div class="card-body">
+     <div *ngIf="incidentStatusList && incidentStatusList.length>0">
+       <!-- <hr> -->
+       <table class="table table-responsive-md">
+             
+         <tbody>
+           <tr>
+             <th>#</th>
+             <th>Incident Number</th>
+             <th>Status</th>
+             
+             <th>Comments</th>
+             <th>Assigned User</th>
+             <th>Date/Time</th>
+             </tr>
+           <tr *ngFor="let status of incidentStatusList let i = index">
+             <td><small>{{i+1}}</small></td>
+             <td><small><b>{{status.incidentNumber}}</b></small></td>
+             <td><span *ngIf="status.status==='SUBMITTED'" class="badge badge-warning rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="(status.status==='REJECTED_DE'||status.status==='REJECTED_SE'||status.status==='REJECTED_CE'|| status.status==='REJECTED_MD')" class="badge badge-danger rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='APPROVED_DE'"  class="badge badge-info rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='APPROVED_CE'"  class="badge badge-dark rounded-0 p-1">{{status.status}}</span>
+             <span *ngIf="status.status==='APPROVED_SE'"  class="badge badge-primary rounded-0 p-1">{{status.status}}</span>
+               <span *ngIf="status.status==='CLOSED'"  class="badge badge-success rounded-0 p-1">{{status.status}}</span></td>
+             <td><small>{{status.userComments}}</small></td>
+             <td><small>{{status.username}}({{status.name}})</small></td>
+             <td><small>{{status.createdOn | date:'medium'}}</small></td>
+           </tr>
+         </tbody>
+       </table>
+     </div> 
+     <!-- /.d-md-flex -->
+   </div>
+   <!-- /.card-body -->
+  </div>
+

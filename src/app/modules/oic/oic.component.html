@@ -4,28 +4,20 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"
-          ><i class="fas fa-bars fa-lg"></i
-        ></a>
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars fa-lg"></i></a>
       </li>
     </ul>
 
-      <!-- Right navbar links -->
+    <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-           
+
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
           <i class="fas fa-user-cog fa-lg"></i>
-           </a>
-           
+        </a>
+
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="#">
-          <i class="nav-icon fas fa-power-off fa-lg"><small> Log Out </small></i>
-          </a>
-      </li> -->
-      
-   
+
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -33,200 +25,117 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a  class="brand-link">
-      <img
-        src="assets/img/mppkvvcl.png"
-        alt="MPPKVVCL Logo"
-        class="brand-image img-circle elevation-3"
-        style="opacity: 0.8;"
-      />
-      <span class="brand-text font-weight-bold">SAFTEY SYSTEM</span> 
-           
+    <a class="brand-link">
+      <img src="assets/img/mppkvvcl.png" alt="MPPKVVCL Logo" class="brand-image img-circle elevation-3"
+        style="opacity: 0.8;" />
+      <span class="brand-text font-weight-bold">SAFTEY SYSTEM</span>
+
     </a>
     <!-- <small>Session Expire</small><br> -->
 
     <div class="d-block">
-      <span class="brand-text font-weight-light text-white ml-5">Session Expire in : </span> 
-      <small class="text-white ml-3"><b><app-session-timer></app-session-timer></b></small> 
+      <span class="brand-text font-weight-light text-white ml-5">Session Expire in : </span>
+      <small class="text-white ml-3"><b>
+          <app-session-timer></app-session-timer>
+        </b></small>
     </div>
-      
+
 
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img
-            src="assets/img/dummy.png"
-            class="img-circle elevation-2"
-            alt="User Image"
-          />
+          <img src="assets/img/dummy.png" class="img-circle elevation-2" alt="User Image" />
         </div>
-        
+
         <div class="info">
           <a class="d-block">
-           <small class="text-white">{{loggedInUser.getName()}}</small><br>
-           <small>Username : </small>  <small class="text-white">{{loggedInUser.getUsername()}}</small><br>
-           <small>Location code : </small> <small class="text-white">{{loggedInUser.getLocationCode()}}</small><br>
-           <small>Location name : </small> <small class="text-white">{{loggedInUser.getLocationName()}}</small></a>
-         </div>
+            <small class="text-white">{{loggedInUser.getName()}}</small><br>
+            <small>Username : </small> <small class="text-white">{{loggedInUser.getUsername()}}</small><br>
+            <small>Location code : </small> <small class="text-white">{{loggedInUser.getLocationCode()}}</small><br>
+            <small>Location name : </small> <small class="text-white">{{loggedInUser.getLocationName()}}</small></a>
+        </div>
       </div>
-     
+
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul
-          class="nav nav-pills nav-sidebar flex-column"
-          data-widget="treeview"
-          role="menu"
-          data-accordion="false"
-        >
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['home']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-            <i class="nav-icon fas fa-home"></i>
-            <p>
-              Home
-           </p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['dashboard']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Dashboard
-            </p>
-          </a>
-        </li>
-       
-
-
-        <li class="nav-item" *ngIf="(role==='ADMIN_DE'||role==='ADMIN_SE'||role==='ADMIN_CE' || role==='ADMIN_MD'|| role==='ADMIN_OIC')">
-          <a class="nav-link" [routerLink]="['to-do-incident']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-            <i class="nav-icon fas fa-tasks"></i>
-            <p>
-              To Do Incident
-            </p>
-          </a>
-        </li>
-
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-            <i class="nav-icon far fa-bell fa-lg"></i>
-            <p>
-              Request Notifications
-            </p>
-          </a>
-        </li>       
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['add-incident']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-            <i class="nav-icon fas fa-plus"></i>
-            <p>
-              Add Incident
-            </p>
-          </a>
-        </li>
-
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['view-incident']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-            <i class="nav-icon fas fa-eye"></i>
-            <p>
-              View Incident
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['track-incident']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-            <i class="nav-icon fas fa-search"></i>
-            <p>
-              Search Incident
-            </p>
-          </a>
-        </li>
-
-        
-        
-        
-
-        <!-- <li class="nav-item has-treeview menu-open">
-                   <a class="nav-link" href="javascript:void(0);">
-            <i class="nav-icon fas fa-users"></i>
-            <p>
-              Users
-              <i class="right fas fa-angle-left"></i>
-              <span class="badge badge-info right">1</span>
-              
-            </p>
-          </a>
-          <ul class="nav nav-treeview" id="user" data-widget="tree">
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['add-user']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Add User</p>
-              </a>
-            </li>
-           </ul>
-        </li> -->
-
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <!-- <li class="nav-item has-treeview menu-open">
-            <a class="nav-link" href="javascript:void(0);">
-              <i class="nav-icon fas fa-bug"></i>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['home']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon fas fa-home"></i>
               <p>
-                Issue
-                <i class="right fas fa-angle-left"></i>
-                <span class="badge badge-info right">3</span>
+                Home
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a class="nav-link"  [routerLink]="['add-issue']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Issue</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['view-issue']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Issue</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['track-issue']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" >
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Track Issue</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
+          </li>
 
-          <!-- <li class="nav-item has-treeview menu-open">
-            <a  class="nav-link" href="javascript:void(0);">
-              <i class="nav-icon fas fa-file"></i>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['dashboard']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Report
-                <i class="right fas fa-angle-left"></i>
-                <span class="badge badge-info right">1</span>
-                
+                Dashboard
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a class="nav-link" [routerLink]="['add-user']" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pending Issue</p>
-                </a>
-              </li>
-             </ul>
-          </li> -->
+          </li>
 
 
-          
+
+          <li class="nav-item"
+            *ngIf="(role==='ADMIN_DE'||role==='ADMIN_SE'||role==='ADMIN_CE' || role==='ADMIN_MD'|| role==='ADMIN_OIC')">
+            <a class="nav-link" [routerLink]="['to-do-incident']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                To Do Incident
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['notification']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon far fa-bell fa-lg"></i>
+              <p>
+                Request Notifications
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['add-incident']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon fas fa-plus"></i>
+              <p>
+                Add Incident
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['view-incident']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon fas fa-eye"></i>
+              <p>
+                View Incident
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['search-incident']" [routerLinkActiveOptions]="{exact:true}"
+              routerLinkActive="active">
+              <i class="nav-icon fas fa-search"></i>
+              <p>
+                Search Incident
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -235,75 +144,63 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  
+
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
-   <div>
-    <nav class="mt-2">
-      <ul
-        class="nav nav-pills nav-sidebar flex-column"
-        data-widget="treeview"
-        role="menu"
-        data-accordion="false"
-      >
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" href="javascript:void(0);" (click)="logoutClicked()">
-          <i class="nav-icon fas fa-sign-out-alt fa-lg text-white"></i>
-          <p class="text-white">
-            Log Out
-         </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-password']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-          <i class="nav-icon fa fa-unlock fa-lg text-white"></i>
-          <p class="text-white">
-            Change Password
-         </p>
-        </a>
-      </li>
+    <div>
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" href="javascript:void(0);" (click)="logoutClicked()">
+              <i class="nav-icon fas fa-sign-out-alt fa-lg text-white"></i>
+              <p class="text-white">
+                Log Out
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-password']"
+              [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+              <i class="nav-icon fas fa-user-lock fa-lg text-white"></i>
+              <p class="text-white">
+                Change Password
+              </p>
+            </a>
+          </li>
 
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-password']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-          <i class="nav-icon fas fa-mobile fa-lg text-white"></i>
-          <p class="text-white">
-            Change Mobile No
-         </p>
-        </a>
-      </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" [routerLink]="['reset-password']"
+              [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+              <i class="nav-icon fas fa-unlock-alt fa-lg text-white"></i>
+              <p class="text-white">
+                Reset Password
+              </p>
+            </a>
+          </li>
 
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-password']" [routerLinkActiveOptions]="{exact:true}"  routerLinkActive="active">
-          <i class="nav-icon fas fa-search-location fa-lg text-white"></i>
-          <p class="text-white">
-            Change Location         </p>
-        </a>
-      </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-mobile']"
+              [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+              <i class="nav-icon fas fa-mobile fa-lg fa-lg text-white"></i>
+              <p class="text-white">
+                Change Mobile No
+              </p>
+            </a>
+          </li>
 
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0);">
-          <i class="nav-icon fas fa-key text-white"></i>
-          <p class="text-white">
-            Change Password
-          </p>
-        </a>
-      </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" [routerLink]="['change-location']"
+              [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active">
+              <i class="nav-icon fas fa-search-location fa-lg text-white"></i>
+              <p class="text-white">
+                Change Location </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
-      <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0);">
-          <i class="nav-icon fas fa-cog text-white"></i>
-          <p class="text-white">
-           Setting
-          </p>
-        </a>
-      </li> -->
-
-      
-      </ul>
-    </nav>
-     
     </div>
   </aside>
   <!-- /.control-sidebar -->
@@ -312,53 +209,11 @@
   <!-- <div class="content-wrapper">
    <router-outlet></router-outlet>
   </div> -->
-  
+
   <div class="content-wrapper">
     <router-outlet></router-outlet>
-    
+
+  </div>
+  <app-footer></app-footer>
+
 </div>
-<app-footer></app-footer>
-  
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

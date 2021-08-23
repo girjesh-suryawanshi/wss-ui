@@ -1,0 +1,237 @@
+<div class="card border-dark">
+    <div class="card-header text-center text-white">CHANGE USER LOCATION</div>
+    <div class="card-body">
+        <form [formGroup]="employeeNumberSearchFrom" (ngSubmit)="searchClicked()">
+            <div class="form-group form-inline d-flex justify-content-center">
+                <div class="mx-sm-3">
+                    <input type="number" class="form-control form-control-sm" id="employeeNumber" 
+                        formControlName="employeeNumber" name="employeeNumber" placeholder="Enter Employee Number"
+                        autocomplete="off">
+                </div>
+                <div>
+                    <button type="submit" [disabled]="employeeNumberSearchFrom.invalid" class="btn btn-sm btn-dark"
+                        id="search" name="search">Search</button>
+                </div>
+            </div>
+        </form>
+        <div *ngIf="isProcessing">
+            <div class="form-group d-flex justify-content-center">
+                <label class="font-weight-bold">Processing....</label>
+                <div class="spinner-border text-info"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" *ngIf="isUserLocation">
+    <!-- <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()"><i
+        class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button>
+      </div> -->
+    <div class="card-header">
+        <div id="titleDiv">
+            <h3 class="card-title text-white text-center">USER LOCATION DETAILS</h3>
+        </div>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"> <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-header text-white">
+                        OLD LOCATION DETAILS
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="">Emp No</label>
+                            </div>
+                            <div class="col-md-2">
+                                <small class="badge badge-dark">{{oldLocationInformation.username}}</small>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Name</label>
+                            </div>
+                            <div class="col-md-5">
+                                <small class="badge badge-danger">{{oldLocationInformation.name}}</small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="">locationCode</label>
+                            </div>
+                            <div class="col-md-2">
+                                <small>{{oldLocationInformation.locationCode}}</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Location Name</label>
+                            </div>
+                            <div class="col-md-4">
+                                <small>{{oldLocationInformation.locationName}}</small>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer text-muted">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4" *ngIf="!isNewLocation">
+                <div class="card text-center">
+                    <div class="card-header text-white">
+                        NEW LOCATION DETAILS
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="locationMasterForm" (ngSubmit)="onGetLocationClick()">
+                            <div class="row">
+
+                                <div class="col-md-5">
+                                    <label for="">Enter New Location Code</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="number" class="form-control form-control-sm"
+                                        formControlName="locationCode" id="locationCode" name="locationCode"
+                                        placeholder="Enter New Location Code" autocomplete="off">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <button type="submit" [disabled]="locationMasterForm.invalid"
+                                        class="btn btn-sm btn-primary" id="getLocation" name="getLocation">Get
+                                        Location</button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                        <div class="row mt-4" *ngIf="isLocationMaster">
+
+                            <div class="col-md-3">
+                                <label for="">Location Code</label>
+                            </div>
+                            <div class="col-md-2">
+                                <small>{{locationMaster.locationCode}}</small>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="">Location Name</label>
+                            </div>
+
+                            <div class="col-md-4">
+                                <small>{{locationMaster.locationName}}</small>
+                            </div>
+
+                        </div>
+                        <div class="row d-flex justify-content-center mt-4">
+                            <div class="col-md-6">
+                                <div *ngIf="isProcessingLocationMaster">
+                                    <div class="form-group d-flex justify-content-center">
+                                        <label class="font-weight-bold">Processing....</label>
+                                        <div class="spinner-border text-info"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center mt-3" *ngIf="isLocationMaster">
+
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-sm btn-info" id="update"
+                                    (click)="onLocationUpdateClick()" name="update">Update</button>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-4" *ngIf="isUpdate">
+
+                            <div class="col-md-3">
+                                <label for="">Location Code</label>
+                            </div>
+                            <div class="col-md-2">
+                                <small>{{updatedLocation.locationCode}}</small>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="">Location Name</label>
+                            </div>
+
+                            <div class="col-md-4">
+                                <small>{{updatedLocation.locationName}}</small>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer text-muted">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4" *ngIf="isUpdate">
+                <div class="card text-center">
+                    <div class="card-header text-white">
+                        UPDATED USER LOCATION DETAILS
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="">Emp No</label>
+                            </div>
+                            <div class="col-md-2">
+                                <small class="badge badge-dark">{{updatedLocation.username}}</small>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Name</label>
+                            </div>
+                            <div class="col-md-5">
+                                <small class="badge badge-danger">{{updatedLocation.name}}</small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="">locationCode</label>
+                            </div>
+                            <div class="col-md-2">
+                                <small>{{updatedLocation.locationCode}}</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Location Name</label>
+                            </div>
+                            <div class="col-md-4">
+                                <small>{{updatedLocation.locationName}}</small>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer text-muted">
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!-- /.d-md-flex -->
+    </div>
+    <!-- /.card-body -->
+</div>

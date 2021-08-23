@@ -1,0 +1,16 @@
+.card-header {
+    font-size: 20px;
+    background-color: #a95c0d;
+}
+
+#titleDiv{
+    display: flex;
+    justify-content: center;
+    height: 0px;
+}
+.table .thead-dark th {
+    background-color: #a95c0d;
+}
+hr.view{
+    border-top: 5px solid  #a95c0d;
+}

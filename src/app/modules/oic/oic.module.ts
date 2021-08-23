@@ -22,10 +22,11 @@ import { AddIncidentComponent } from './add-incident/add-incident.component';
 import { ViewIncidentComponent } from './view-incident/view-incident.component';
 import { TrackIncidentComponent } from './track-incident/track-incident.component';
 import { ToDoIncidentComponent } from './to-do-incident/to-do-incident.component';
+import { SearchIncidentComponent } from './search-incident/search-incident.component';
 
 
 @NgModule({
-  declarations: [OicComponent,NavbarComponent,SessionTimerComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent, ToDoIssueComponent, AddIncidentComponent, ViewIncidentComponent, TrackIncidentComponent, ToDoIncidentComponent],
+  declarations: [OicComponent,NavbarComponent,SessionTimerComponent,FooterComponent, AddIssueComponent, HomeComponent,DashboardComponent, ViewIssueComponent, TrackIssueComponent, RequestNotificationComponent, ToDoIssueComponent, AddIncidentComponent, ViewIncidentComponent, TrackIncidentComponent, ToDoIncidentComponent, SearchIncidentComponent],
   imports: [
     CommonModule,
     OicRoutingModule,

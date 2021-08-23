@@ -25,6 +25,8 @@ export class ChangePasswordComponent implements OnInit {
 
   public user: any = {};
 
+  fieldTextType: boolean;
+
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router,
     private authorizationService: AuthorizationService, private globalutilityService: GobalutilityService) {
 
@@ -50,7 +52,7 @@ export class ChangePasswordComponent implements OnInit {
       }
     }
 
-  }  
+  }
 
   ngOnInit(): void {
 
@@ -78,7 +80,7 @@ export class ChangePasswordComponent implements OnInit {
       console.log(error);
     });
   }
-  
+
   private logout() {
     console.log("logout() called");
     let logout = setInterval(() => {
@@ -99,6 +101,10 @@ export class ChangePasswordComponent implements OnInit {
       confirm_password: ''
     });
 
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 
 }

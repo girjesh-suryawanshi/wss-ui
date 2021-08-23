@@ -49,4 +49,42 @@ export class UserService {
     }
   }
 
+  getUserByUsername(username: string) {
+    return this.http.get(this.contextPath + 'users/user-name/' + username , { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+    
+}
+
+
+  getByLocationCode(locationCode: string) {
+    return this.http.get(this.contextPath + 'location-master/location-code/' + locationCode , { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));  
+  }
+  
+  updateUserDetail(userDetail: any ) {
+   return this.http.put(this.contextPath + 'users-detail',userDetail, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+  
+  updateUserMobileNumber(userDetail: any ) {
+    return this.http.put(this.contextPath + 'users-detail/update-mobile-number',userDetail, { observe: 'response' }).pipe(
+       map((response: HttpResponse<any>) => {
+         return response;
+       }));
+   }
+  
+   resetUserByUsername(username: string) {
+    return this.http.put(this.contextPath + 'users/reset-user/user-name/' + username , { observe: 'response' }).pipe(map(
+    (response: HttpResponse<any>) => {
+      return response;
+    }));
+    
+  }
+
 }

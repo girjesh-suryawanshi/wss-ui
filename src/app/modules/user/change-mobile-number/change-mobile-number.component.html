@@ -1,0 +1,104 @@
+<div class="card border-dark">
+    <div class="card-header text-center text-white">CHANGE MOBILE NUMBER</div>
+    <div class="card-body">
+      <form [formGroup]="employeeNumberSearchFrom" (ngSubmit)="searchClicked()">
+        <div class="form-group form-inline d-flex justify-content-center">
+          <div class="mx-sm-3">
+            <input type="number" class="form-control form-control-sm" id="employeeNumber" formControlName="employeeNumber"
+              name="employeeNumber" placeholder="Enter Employee Number" autocomplete="off">
+          </div>
+          <div>
+            <button type="submit" [disabled]="employeeNumberSearchFrom.invalid" class="btn btn-sm btn-dark" id="search"
+              name="search">Search</button>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="isProcessing">
+        <div class="form-group d-flex justify-content-center">
+          <label class="font-weight-bold">Processing....</label>
+          <div class="spinner-border text-info"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card" *ngIf="isUserLocation">
+    <!-- <div class="d-flex justify-content-end p-2 mb-2"><button class="btn btn-info btn-sm" (click)="onClickBack()"><i
+          class="fa fa-arrow-left fa-lg" aria-hidden="true"></i></button>
+        </div> -->
+    <div class="card-header">
+      <div id="titleDiv">
+        <h1 class="card-title text-white text-center">USER MOBILE DETAILS</h1>
+      </div>
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse"> <i class="fas fa-minus"></i> </button>
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-2">
+          <label for="Employee No">Employee No</label>
+        </div>
+  
+        <div class="col-md-2">
+          <label for="Employee Name">Employee Name</label>
+        </div>
+  
+        <div class="col-md-2">
+          <label for="Location Code">Location Code</label>
+        </div>
+  
+        <div class="col-md-2">
+          <label for="Location Name">Location Name</label>
+        </div>
+  
+        <div class="col-md-2">
+          <label for="Mobile Number">Mobile Number</label>
+        </div>
+  
+        <div class="col-md-2">
+          <label for="Actions">Actions</label>
+        </div>
+      </div>
+      <form [formGroup]="userMobileNoFormGroup" (ngSubmit)="OnclickUpdate()">
+        <div class="row mt-2">
+          <div class="col-md-2">
+            <small class="badge badge-primary">{{oldLocationInformation.username}}</small>
+          </div>
+  
+          <div class="col-md-2">
+            <small class="badge badge-danger">{{oldLocationInformation.name}}</small>
+          </div>
+  
+          <div class="col-md-2">
+            <small class="badge badge-dark">{{oldLocationInformation.locationCode}}</small>
+          </div>
+  
+          <div class="col-md-2">
+            <small class="badge badge-dark">{{oldLocationInformation.locationName}}</small>
+          </div>
+  
+          <div class="col-md-2">
+            <small *ngIf="!isEdit" class="badge badge-dark">{{oldLocationInformation.mobileNumber}}</small>
+            <input *ngIf="isEdit" type="text" placeholder="Enter new Mobile No" class="form-control form-control-sm"
+              formControlName="updatedMobileNumber">
+            <small class="form-text text-danger"
+              *ngIf="userMobileNoFormGroup.controls.updatedMobileNumber.errors">{{userMobileNoFormGroup.controls.updatedMobileNumber.errors.onlyDigit.message}}<br /></small>
+          </div>
+  
+          <div class="col-md-2">
+            <button type="button" *ngIf="!isEdit" class="btn btn-sm btn-dark mr-2" id="edit" (click)="OnClickEdit()"
+              name="edit">edit</button>
+            <button type="submit" *ngIf="isUpdate" [disabled]="userMobileNoFormGroup.invalid"
+              class="btn btn-sm btn-success" id="update" name="update">update</button>
+          </div>
+  
+        </div>
+      </form>
+  
+      <!-- /.d-md-flex -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  

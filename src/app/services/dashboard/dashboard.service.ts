@@ -48,9 +48,9 @@ export class DashboardService {
       }));
   }
 
-  getFileByTokenNumber(tokenNumber: string) {
+  getFileByIncidentNumber(incidentNumber: string) {
     console.log("Inside getting users");
-    return this.http.get(this.contextPath + '/file/token-number/' + tokenNumber, { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + 'upload-file/file/incident-number/' + incidentNumber, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));

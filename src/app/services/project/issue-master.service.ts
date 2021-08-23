@@ -143,6 +143,13 @@ reopenIssueByTokenNumber(tokenNumber:string,status:string,comments:string,upload
     }));
 }
 
+getIncidentMasterByIncidentNumber(incidentNumber: string) {
+  return this.http.get(this.contextPath + 'incident-master/incident-number/' + incidentNumber , { observe: 'response' }).pipe(map(
+  (response: HttpResponse<any>) => {
+    return response;
+  }));  
+}
+
 }
 
 
