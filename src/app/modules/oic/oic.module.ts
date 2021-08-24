@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { OicRoutingModule } from './oic-routing.module';
 import { OicComponent } from './oic.component';
 import { NavbarComponent } from '../../components/navbar/nav-bar/navbar.component';

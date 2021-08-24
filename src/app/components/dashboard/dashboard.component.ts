@@ -22,24 +22,27 @@ export class DashboardComponent implements OnInit {
   forwardAssignIssue: number = 0;
   resolveAssignIssue: number = 0;
   rejectAssignIssue: number = 0;
+  statusRejectionList: any = ['REJECTED_DE', 'REJECTED_SE','REJECTED_CE','REJECTED_MD'];
+  statusPendingList:any=['SUBMITTED','APPROVED_DE','APPROVED_SE','APPROVED_CE'];
+  statusCloseList:any=['CLOSED'];
+
+
   constructor(private authorizationService: AuthorizationService, private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
     this.loggedInUser = this.authorizationService.getLoggedInUser();
     this.username = this.loggedInUser.getUsername();
-    this.countByUsername(this.username);
-    this.countByUsernameAndStatusPending(this.username, 'SUBMITTED');
-    this.countByUsernameAndStatusResolve(this.username, 'APPROVED');
-    this.countByUsernameAndStatusForwarded(this.username, 'FORWARDED');
-    this.countByUsernameAndStatusRejected(this.username, 'REJECTED');
+    this.countByUsername(this.username);//total count
+    this.countByUsernameAndStatusPendingIn(this.username, this.statusPendingList);//total pending count
+    this.countByUsernameAndStatusClose(this.username, this.statusCloseList);//total close count
+    this.countByUsernameAndStatusRejectIn(this.username, this.statusRejectionList);//otal Rejection count
+
+
     this.countByAssignUsername(this.username);
-    this.countByAssignUsernameAndStatusPending(this.username, 'PENDING');
-    this.countByAssignUsernameAndStatusResolve(this.username, 'COMPLETED');
-    this.countByAssignUsernameAndStatusForwarded(this.username, 'FORWARDED');
-    this.countByAssignUsernameAndStatusRejected(this.username, 'REJECTED');
-
-
-
+    // this.countByAssignUsernameAndStatusPending(this.username, 'SUBMITTED');
+    // this.countByAssignUsernameAndStatusResolve(this.username, 'CLOSED');
+    // this.countByAssignUsernameAndStatusForwarded(this.username, 'FORWARDED');
+    // this.countByAssignUsernameAndStatusRejected(this.username, 'REJECTED');
   }
   countByAssignUsernameAndStatusRejected(username: any, status: string) {
     this.dashboardService.countByAssignUsernameAndStatus(username, status).subscribe(success => {
@@ -110,9 +113,9 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  countByUsernameAndStatusRejected(username: any, status: string) {
-    this.dashboardService.countByUsernameAndStatus(username, status).subscribe(success => {
-      console.log("inside success");
+  countByUsernameAndStatusRejectIn(username: any, status: any) {
+    this.dashboardService.countByUsernameAndStatusIn(username, status).subscribe(success => {
+      console.log("inside success count");
       console.log(success);
       if (success.status === 200) {
         this.rejectedIssue = success.body;
@@ -123,8 +126,8 @@ export class DashboardComponent implements OnInit {
 
     }, error => { })
   }
-  countByUsernameAndStatusForwarded(username: any, status: string) {
-    this.dashboardService.countByUsernameAndStatus(username, status).subscribe(success => {
+  countByUsernameAndStatusForwarded(username: any, status: any) {
+    this.dashboardService.countByUsernameAndStatusIn(username, status).subscribe(success => {
       console.log("inside success");
       console.log(success);
       if (success.status === 200) {
@@ -136,8 +139,8 @@ export class DashboardComponent implements OnInit {
 
     }, error => { })
   }
-  countByUsernameAndStatusResolve(username: any, status: string) {
-    this.dashboardService.countByUsernameAndStatus(username, status).subscribe(success => {
+  countByUsernameAndStatusClose(username: any, status: any) {
+    this.dashboardService.countByUsernameAndStatusIn(username, status).subscribe(success => {
       console.log("inside success");
       console.log(success);
       if (success.status === 200) {
@@ -150,8 +153,8 @@ export class DashboardComponent implements OnInit {
     }, error => { })
   }
 
-  countByUsernameAndStatusPending(username: any, status: string) {
-    this.dashboardService.countByUsernameAndStatus(username, status).subscribe(success => {
+  countByUsernameAndStatusPendingIn(username: any, status: string) {
+    this.dashboardService.countByUsernameAndStatusIn(username, status).subscribe(success => {
       console.log("inside success");
       console.log(success);
       if (success.status === 200) {

@@ -35,6 +35,16 @@ export class DashboardService {
       }));
   }
 
+  
+
+  public countByUsernameAndStatusIn(username: string,statusList: string[]) {
+    return this.http.get(this.contextPath + 'incident-master/user-name/' + username + '/status-list/' + statusList,
+      { observe: 'response' }).pipe(map((response: HttpResponse<any>) => {
+        return response;
+      }));
+  }
+  
+
   contextPath: any;
   constructor(private http: HttpClient, private globalConfiguration: GlobalConfiguration) {
     this.contextPath = this.globalConfiguration.getBackendURLPrefix();
