@@ -7,15 +7,16 @@ import { GlobalConfiguration } from 'src/app/config/global.config';
   providedIn: 'root'
 })
 export class DashboardService {
-  countByAssignUsernameAndStatus(assignUsername: any, status: string) {
-    return this.http.get(this.contextPath + '/project-problem-assignment/assign-username/' + assignUsername +'/status/'+status, { observe: 'response' }).pipe(map(
+
+  countByAssignUsernameAndStatusIn(assignUsername: any, status: string []) {
+    return this.http.get(this.contextPath + '/incident-assign-master/count/assign-username/' + assignUsername +'/status-list/'+status, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
   }
 
   countAssignByUsername(assignUsername: any) {
-    return this.http.get(this.contextPath + '/project-problem-assignment/assign-username/' + assignUsername, { observe: 'response' }).pipe(map(
+    return this.http.get(this.contextPath + 'incident-assign-master/count/assign-username/' + assignUsername, { observe: 'response' }).pipe(map(
       (response: HttpResponse<any>) => {
         return response;
       }));
@@ -27,15 +28,7 @@ export class DashboardService {
         return response;
       }));
   }
-
-  countByUsernameAndStatus(username: any,status:any) {
-    return this.http.get(this.contextPath + '/incident-master/user-name/' + username +'/status/'+status, { observe: 'response' }).pipe(map(
-      (response: HttpResponse<any>) => {
-        return response;
-      }));
-  }
-
-  
+   
 
   public countByUsernameAndStatusIn(username: string,statusList: string[]) {
     return this.http.get(this.contextPath + 'incident-master/user-name/' + username + '/status-list/' + statusList,

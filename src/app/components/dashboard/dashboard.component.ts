@@ -36,40 +36,31 @@ export class DashboardComponent implements OnInit {
     this.countByUsernameAndStatusPendingIn(this.username, this.statusPendingList);//total pending count
     this.countByUsernameAndStatusClose(this.username, this.statusCloseList);//total close count
     this.countByUsernameAndStatusRejectIn(this.username, this.statusRejectionList);//otal Rejection count
-
-
+    
     this.countByAssignUsername(this.username);
-    // this.countByAssignUsernameAndStatusPending(this.username, 'SUBMITTED');
-    // this.countByAssignUsernameAndStatusResolve(this.username, 'CLOSED');
-    // this.countByAssignUsernameAndStatusForwarded(this.username, 'FORWARDED');
-    // this.countByAssignUsernameAndStatusRejected(this.username, 'REJECTED');
+    this.countByAssignUsernameAndStatusPendingIn(this.username, this.statusPendingList);
+    this.countByAssignUsernameAndStatusClose(this.username, this.statusCloseList);
+    this.countByAssignUsernameAndStatusRejectedIn(this.username, this.statusRejectionList);
   }
-  countByAssignUsernameAndStatusRejected(username: any, status: string) {
-    this.dashboardService.countByAssignUsernameAndStatus(username, status).subscribe(success => {
-      console.log("inside success");
+  countByAssignUsernameAndStatusRejectedIn(username: any, status: any) {
+    this.dashboardService.countByAssignUsernameAndStatusIn(username, status).subscribe(success => {
+      console.log("inside Reject success");
       console.log(success);
       if (success.status === 200) {
         this.rejectAssignIssue = success.body;
+        console.log(this.rejectAssignIssue);
+        
       }
       else if (success.status === 204) {
         this.rejectAssignIssue = 0;
       }
     }, error => { })
   }
-  countByAssignUsernameAndStatusForwarded(username: any, status: string) {
-    this.dashboardService.countByAssignUsernameAndStatus(username, status).subscribe(success => {
-      console.log("inside success");
-      if (success.status === 200) {
-        this.forwardAssignIssue = success.body;
-      }
-      else if (success.status === 204) {
-        this.forwardAssignIssue = 0;
-      }
 
-    }, error => { })
-  }
-  countByAssignUsernameAndStatusResolve(username: any, status: string) {
-    this.dashboardService.countByAssignUsernameAndStatus(username, status).subscribe(success => {
+ 
+
+  countByAssignUsernameAndStatusClose(username: any, status: any) {
+    this.dashboardService.countByAssignUsernameAndStatusIn(username, status).subscribe(success => {
       console.log("inside success");
       console.log(success);
       if (success.status === 200) {
@@ -81,8 +72,9 @@ export class DashboardComponent implements OnInit {
 
     }, error => { })
   }
-  countByAssignUsernameAndStatusPending(username: any, status: string) {
-    this.dashboardService.countByAssignUsernameAndStatus(username, status).subscribe(success => {
+
+  countByAssignUsernameAndStatusPendingIn(username: any, status: any) {
+    this.dashboardService.countByAssignUsernameAndStatusIn(username, status).subscribe(success => {
       console.log("inside success");
       console.log(success);
       if (success.status === 200) {
@@ -95,6 +87,7 @@ export class DashboardComponent implements OnInit {
 
     }, error => { })
   }
+
   countByAssignUsername(username: any) {
     this.dashboardService.countAssignByUsername(username).subscribe(success => {
       console.log("success");
@@ -126,6 +119,7 @@ export class DashboardComponent implements OnInit {
 
     }, error => { })
   }
+
   countByUsernameAndStatusForwarded(username: any, status: any) {
     this.dashboardService.countByUsernameAndStatusIn(username, status).subscribe(success => {
       console.log("inside success");
